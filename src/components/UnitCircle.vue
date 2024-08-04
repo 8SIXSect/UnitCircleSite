@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { computed, type ComputedRef } from 'vue';
+import { computed, ref, watch, type ComputedRef, type Ref } from 'vue';
 import DrawPairOfLinesForSlopeOfAngle from './DrawPairOfLinesForSlopeOfAngle.vue';
 import DrawSingleLineForSlopeOfAngle from './DrawSingleLineForSlopeOfAngle.vue';
 import type { CoordinatesOfAngle, LineCoordinates } from '@/shared_types';
@@ -73,6 +73,27 @@ const sixtyDegrees: ComputedRef<CoordinatesOfAngle> = computed(() => {
     return buildCoordinatesOfAngle(posX, posY);
 });
 
+
+// default value of pi or like a placeholder
+const thirtyDegreesInputForRadians: Ref<string> = ref<string>("");
+
+/**
+    * Prevents the user from inputting invalid characters
+*/
+const sanitizeInput = (event: Event) => {
+    if (event.target instanceof HTMLInputElement) {
+        const inputValue: string = event.target.value;
+        const filteredValue: string = inputValue.replace(/[^0-9/piπ]/g, "");
+        thirtyDegreesInputForRadians.value = filteredValue;
+    }
+};
+
+// Purpose: watch for input change and replace "pi" with pi symbol
+watch(thirtyDegreesInputForRadians, (currentValue: string) => {
+    const patternForReplacement: RegExp = /pi/gi;
+    thirtyDegreesInputForRadians.value = currentValue.replace(patternForReplacement, "π");
+});
+
 </script>
 
 <template>
@@ -84,7 +105,10 @@ const sixtyDegrees: ComputedRef<CoordinatesOfAngle> = computed(() => {
             <DrawPairOfLinesForSlopeOfAngle :coordinates="thirtyDegrees" />
             <DrawPairOfLinesForSlopeOfAngle :coordinates="fourtyFiveDegrees" />
             <DrawPairOfLinesForSlopeOfAngle :coordinates="sixtyDegrees" />
+
+            <circle cx="0" cy="0" r="0.2" stroke="black" stroke-width="0.005" fill="none" />
         </svg>
+        <input class="rounded" v-model="thirtyDegreesInputForRadians" @input="sanitizeInput" />
     </div>
 </template>
 
@@ -106,6 +130,18 @@ svg {
     fill: none;
     stroke: black;
     stroke-width: 2;
+}
+
+input {
+    position: absolute;
+    transform: translate(400%, -60%);
+    z-index: 10;
+
+    outline: none;
+    border: 1px solid black;
+    width: 2.5vw;
+    padding: 0;
+    text-align: center;
 }
 
 </style>

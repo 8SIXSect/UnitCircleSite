@@ -14,7 +14,6 @@ const props = defineProps<{
 }>();
 
 const { coordinates } = props;
-console.log(coordinates)
 
 </script>
 
