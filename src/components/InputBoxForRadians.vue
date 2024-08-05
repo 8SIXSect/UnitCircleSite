@@ -1,17 +1,21 @@
-<template>
-    <input class="rounded" v-model="inputForRadiansModel" @input="sanitizeInput" />
-</template>
-
 <script setup lang="ts">
 
-import { type Ref, defineProps, watch } from 'vue';
+import type { OrderedPair } from '@/shared_types';
+import { type Ref, defineProps, ref, watch } from 'vue';
+
 
 const props = defineProps<{
-    inputForRadiansModel: Ref<string, string>
+    coordinatesForInput: OrderedPair
 }>();
 
-const { inputForRadiansModel } = props;
 
+const { coordinatesForInput } = props;
+
+console.log(coordinatesForInput);
+
+
+// default value of pi or like a placeholder
+const inputForRadiansModel: Ref<string> = ref<string>("");
 
 /**
     * Prevents the user from inputting invalid characters
@@ -32,6 +36,10 @@ watch(inputForRadiansModel, (currentValue: string) => {
 
 
 </script>
+
+<template>
+    <input class="rounded" v-model="inputForRadiansModel" @input="sanitizeInput" />
+</template>
 
 <style scoped>
 

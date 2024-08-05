@@ -1,8 +1,3 @@
-<template>
-    <DrawSingleLineForSlopeOfAngle :coordinates="coordinates.initialAngle" />
-    <DrawSingleLineForSlopeOfAngle :coordinates="coordinates.supplementaryAngle" />
-</template>
-
 <script setup lang="ts">
 
 import { defineProps } from 'vue';
@@ -16,4 +11,9 @@ const props = defineProps<{
 const { coordinates } = props;
 
 </script>
+
+<template>
+    <DrawSingleLineForSlopeOfAngle :coordinates="coordinates.initialAngle" />
+    <DrawSingleLineForSlopeOfAngle :coordinates="coordinates.supplementaryAngle" />
+</template>
 

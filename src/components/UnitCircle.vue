@@ -99,9 +99,7 @@ const sixtyDegrees: ComputedAngleCoords = createAndComputeCoordinatesOfAngle({
 });
 
 
-// default value of pi or like a placeholder
-const thirtyDegreesInputForRadians: Ref<string> = ref<string>("");
-//const thirtyDegreesUnitCircleCoordinates
+const thirtyDegreesUnitCircleCoordinates: OrderedPair = { x: 1, y: 0 };
 
 </script>
 
@@ -120,7 +118,7 @@ const thirtyDegreesInputForRadians: Ref<string> = ref<string>("");
             -->
         </svg>
 
-        <InputBoxForRadians :input-for-radians-model="thirtyDegreesInputForRadians" />
+        <InputBoxForRadians :coordinates-for-input="thirtyDegreesUnitCircleCoordinates" />
     </div>
 </template>
 
