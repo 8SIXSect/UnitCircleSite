@@ -1,9 +1,9 @@
 <template>
     <line
-        :x1="coordinates.x1"
-        :y1="coordinates.y1"
-        :x2="coordinates.x2"
-        :y2="coordinates.y2"
+        :x1="coordinates.startPoint.x"
+        :y1="coordinates.startPoint.y"
+        :x2="coordinates.endPoint.x"
+        :y2="coordinates.endPoint.y"
         stroke="black"
         stroke-width="0.005"
     />
