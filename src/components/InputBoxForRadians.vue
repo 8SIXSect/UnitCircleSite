@@ -15,6 +15,11 @@ const { coordinatesForInput, inputId } = props;
 // TODO: add default value of pi or like a placeholder
 const inputBoxRef: Ref<string> = ref<string>("");
 
+// TODO: when you add modes, this will need to depend on some state & input's width
+// should be equal to this so add that
+const inputBoxMaxLength: Ref<number> = ref<number>(5);
+const inputBoxWidth: string = `${inputBoxMaxLength.value + 2}ch`
+
 
 /**
     * Prevents the user from inputting invalid characters
@@ -22,12 +27,13 @@ const inputBoxRef: Ref<string> = ref<string>("");
 const sanitizeInput = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
         const inputValue: string = event.target.value;
-        const filteredValue: string = inputValue.replace(/[^0-9/piπ]/g, "");
+        const filteredValue: string = inputValue.replace(/[^0-9/π]/g, "");
         inputBoxRef.value = filteredValue;
     }
 };
 
 
+// TODO: make 25vw dynamic and depend on a constant for the radius/diameter
 // 25(vw) is used because that's the radius of the Unit Circle here
 const translateX: number = 25 * coordinatesForInput.x;
 const translateY: number = 25 * coordinatesForInput.y;
@@ -49,6 +55,7 @@ const dummyDivRef = ref<HTMLDivElement | null>(null);
 const mathCharacterButtonRef = ref<HTMLButtonElement | null>(null);
 
 
+// Purpose: dynamically adjusts the width of `dummyDiv`
 onMounted(() => {
     if ((mathCharacterButtonRef.value !== null) && (dummyDivRef.value !== null)) {
         dummyDivRef.value.style.width = `${mathCharacterButtonRef.value.offsetWidth}px`;
@@ -56,6 +63,11 @@ onMounted(() => {
 });
 
 
+/**
+    * Provided by UnitCircle
+    * It's a number used to identify the input that is currerntly focused
+    * The number is the input's index which is also it's `inputId`
+*/
 const currentlyFocusedInput = inject("currentlyFocusedInput") as Ref<number | null>;
 
 
@@ -96,6 +108,7 @@ watch(currentlyFocusedInput, (currentValue: number | null, previousValue: number
         <input
             class="rounded"
             v-model="inputBoxRef"
+            :maxlength="inputBoxMaxLength"
             @input="sanitizeInput"
             @focus="whenInputIsFocused"
             />
@@ -122,7 +135,7 @@ input {
 
     outline: none;
     border: 1px solid black;
-    width: 6ch;
+    width: v-bind("inputBoxWidth");
 }
 
 </style>

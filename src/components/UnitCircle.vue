@@ -35,6 +35,8 @@ const yAxis: ComputedRef<LineCoordinates> = computed(() => ({
 }));
 
 
+type ComputedAngleCoords = ComputedRef<CoordinatesOfAngle>;
+
 
 /**
     * Orders the coordinates in a way so that their slopes can be drawn
@@ -42,11 +44,11 @@ const yAxis: ComputedRef<LineCoordinates> = computed(() => ({
     * x's and y's of the coordinates for the angle
     * @returns CoordinatesOfAngle object
 */
-const buildCoordinatesOfAngle = (positivePoint: OrderedPair): CoordinatesOfAngle => {
+const buildComputedCoordinatesOfAngle = (positivePoint: OrderedPair): ComputedAngleCoords => {
     const negX: number = positivePoint.x * -1;
     const negY: number = positivePoint.y * -1;
-
-    return {
+    
+    return computed(() => ({     
         initialAngle: {
             startPoint: {
                 x: positivePoint.x, y: positivePoint.y,
@@ -63,20 +65,7 @@ const buildCoordinatesOfAngle = (positivePoint: OrderedPair): CoordinatesOfAngle
                 x: positivePoint.x, y: negY
             }
         }
-    };   
-};
-
-
-type ComputedAngleCoords = ComputedRef<CoordinatesOfAngle>;
-
-
-/**
-    * Helper function to build a CoordinatesOfAngle object from an orderedPair
-    * and then turn it into a computed object
-*/
-const createAndComputeCoordinatesOfAngle = (orderedPair: OrderedPair): ComputedAngleCoords => {
-    // TODO: Combine this func w/ buildCoordinates and refactor
-    return computed(() => buildCoordinatesOfAngle(orderedPair));
+    }));
 };
 
 
@@ -105,9 +94,9 @@ const sixtyDegreesPair: OrderedPair = {
     * - 60 degrees & 120 degrees
 */
 const computedAngleCoordsToDraw: ComputedAngleCoords[] = [
-    createAndComputeCoordinatesOfAngle(thirtyDegreesPair),
-    createAndComputeCoordinatesOfAngle(fortyFiveDegreesPair),
-    createAndComputeCoordinatesOfAngle(sixtyDegreesPair)
+    buildComputedCoordinatesOfAngle(thirtyDegreesPair),
+    buildComputedCoordinatesOfAngle(fortyFiveDegreesPair),
+    buildComputedCoordinatesOfAngle(sixtyDegreesPair)
 ];
 
 
@@ -155,8 +144,6 @@ const coordinatesForInputBoxes: OrderedPair[] = [
     * The number acts as a way of identifying which input is currently focused
 */
 const currentlyFocusedInput = ref<number | null>(null);
-
-
 provide("currentlyFocusedInput", currentlyFocusedInput);
 
 
