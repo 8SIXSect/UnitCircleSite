@@ -1,21 +1,20 @@
 <script setup lang="ts">
 
 import type { OrderedPair } from '@/shared_types';
-import { type Ref, defineProps, ref, watch } from 'vue';
+import { type Ref, defineProps, ref, watch, onMounted, inject } from 'vue';
 
 
 const props = defineProps<{
-    coordinatesForInput: OrderedPair
+    coordinatesForInput: OrderedPair,
+    inputId: number
 }>();
 
 
-const { coordinatesForInput } = props;
+const { coordinatesForInput, inputId } = props;
 
-console.log(coordinatesForInput);
+// TODO: add default value of pi or like a placeholder
+const inputBoxRef: Ref<string> = ref<string>("");
 
-
-// default value of pi or like a placeholder
-const inputForRadiansModel: Ref<string> = ref<string>("");
 
 /**
     * Prevents the user from inputting invalid characters
@@ -24,35 +23,112 @@ const sanitizeInput = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
         const inputValue: string = event.target.value;
         const filteredValue: string = inputValue.replace(/[^0-9/piπ]/g, "");
-        inputForRadiansModel.value = filteredValue;
+        inputBoxRef.value = filteredValue;
     }
 };
 
 // Purpose: watch for input change and replace "pi" with pi symbol
-watch(inputForRadiansModel, (currentValue: string) => {
+watch(inputBoxRef, (currentValue: string) => {
     const patternForReplacement: RegExp = /pi/gi;
-    inputForRadiansModel.value = currentValue.replace(patternForReplacement, "π");
+    inputBoxRef.value = currentValue.replace(patternForReplacement, "π");
+});
+
+
+// 25(vw) is used because that's the radius of the Unit Circle here
+const translateX: number = 25 * coordinatesForInput.x;
+const translateY: number = 25 * coordinatesForInput.y;
+
+
+/**
+    * Translate will position the input in desired location on the Unit Circle
+*/
+const divModifiedStyle = {
+    transform: `translate(${translateX}vw, ${translateY}vw)`
+};
+
+
+/**
+    * Purpose: Math button puts the input box off-center so I used a div that's
+    * invisible and set its width after the math char button's width is computed
+*/
+const dummyDivRef = ref<HTMLDivElement | null>(null);
+const mathCharacterButtonRef = ref<HTMLButtonElement | null>(null);
+
+
+onMounted(() => {
+    if ((mathCharacterButtonRef.value !== null) && (dummyDivRef.value !== null)) {
+        dummyDivRef.value.style.width = `${mathCharacterButtonRef.value.offsetWidth}px`;
+    }
+});
+
+
+const currentlyFocusedInput = inject("currentlyFocusedInput") as Ref<number | null>;
+
+
+/**
+    * Sets the visibility of the html button: #mathCharacterButton
+*/
+const setMathCharacterButtonVisibility = (visibility: "visible" | "hidden"): void => {
+    if (mathCharacterButtonRef.value !== null) {
+        mathCharacterButtonRef.value.style.visibility = visibility;
+    }
+};
+
+
+/**
+    * Whenever this input box is focused, its math button needs to be visible
+    * Also, this func will be set as the currently focused input
+*/
+const whenInputIsFocused = () => {
+    currentlyFocusedInput.value = inputId;
+    setMathCharacterButtonVisibility("visible");
+};
+
+
+// If there's a new current input but it's not the same as the original, then
+// it is set to hidden
+watch(currentlyFocusedInput, (currentValue: number | null, previousValue: number | null) => {
+    if ((inputId === previousValue) && (previousValue !== currentValue)) {
+        setMathCharacterButtonVisibility("hidden");
+    }
 });
 
 
 </script>
 
 <template>
-    <input class="rounded" v-model="inputForRadiansModel" @input="sanitizeInput" />
+    <div id="inputBoxParentDiv" :style="divModifiedStyle">
+        <div ref="dummyDivRef" id="dummyDiv"></div>
+        <input
+            class="rounded"
+            v-model="inputBoxRef"
+            @input="sanitizeInput"
+            @focus="whenInputIsFocused"
+            />
+        <button
+            ref="mathCharacterButtonRef"
+            id="mathCharacterButton"
+            class="invisible"
+            >π</button>
+    </div>
 </template>
 
 <style scoped>
 
-input {
+#inputBoxParentDiv {
     position: absolute;
-    transform: translate(550%, -60%);
     z-index: 10;
+    display: flex;
+}
+
+input {
+    z-index: inherit;
+    text-align: center;
+    padding: 0;
 
     outline: none;
     border: 1px solid black;
     width: 6ch;
-    padding: 0;
-    text-align: center;
 }
 
 </style>
