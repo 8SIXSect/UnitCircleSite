@@ -4,6 +4,12 @@ import type { OrderedPair } from '@/shared_types';
 import { type Ref, defineProps, ref, watch, onMounted, inject } from 'vue';
 
 
+/**
+    * This is the PI character
+*/
+const PI_SYMBOL = inject("PI_SYMBOL") as string;
+
+
 const props = defineProps<{
     coordinatesForInput: OrderedPair,
     inputId: number
@@ -109,7 +115,7 @@ watch(currentlyFocusedInput, (currentValue: number | null, previousValue: number
 */
 const whenMathCharacterButtonIsClicked = () => {
     if (inputBoxRef.value.length < inputBoxMaxLength.value) {
-        inputBoxRef.value += "π";
+        inputBoxRef.value += PI_SYMBOL;
     }
 }
 
@@ -131,7 +137,7 @@ const whenMathCharacterButtonIsClicked = () => {
             id="mathCharacterButton"
             class="invisible"
             @click="whenMathCharacterButtonIsClicked"
-            >π</button>
+            >{{ PI_SYMBOL }}</button>
     </div>
 </template>
 
