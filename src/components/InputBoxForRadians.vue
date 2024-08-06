@@ -27,12 +27,6 @@ const sanitizeInput = (event: Event) => {
     }
 };
 
-// Purpose: watch for input change and replace "pi" with pi symbol
-watch(inputBoxRef, (currentValue: string) => {
-    const patternForReplacement: RegExp = /pi/gi;
-    inputBoxRef.value = currentValue.replace(patternForReplacement, "π");
-});
-
 
 // 25(vw) is used because that's the radius of the Unit Circle here
 const translateX: number = 25 * coordinatesForInput.x;
