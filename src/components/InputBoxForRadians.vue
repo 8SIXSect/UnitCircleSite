@@ -12,6 +12,7 @@ const props = defineProps<{
 
 const { coordinatesForInput, inputId } = props;
 
+
 // TODO: add default value of pi or like a placeholder
 const inputBoxRef: Ref<string> = ref<string>("");
 
@@ -26,9 +27,12 @@ const inputBoxWidth: string = `${inputBoxMaxLength.value + 2}ch`
 */
 const sanitizeInput = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
+        
+        // Allows: digits, '/' and pi symbol
+        const patternForReplacement: RegExp = /[^0-9/π]/g;
         const inputValue: string = event.target.value;
-        const filteredValue: string = inputValue.replace(/[^0-9/π]/g, "");
-        inputBoxRef.value = filteredValue;
+        
+        inputBoxRef.value = inputValue.replace(patternForReplacement, "");
     }
 };
 
@@ -100,6 +104,16 @@ watch(currentlyFocusedInput, (currentValue: number | null, previousValue: number
 });
 
 
+/**
+    * Purpose is to write a pi symbol in the inputBox when this button is clicked
+*/
+const whenMathCharacterButtonIsClicked = () => {
+    if (inputBoxRef.value.length < inputBoxMaxLength.value) {
+        inputBoxRef.value += "π";
+    }
+}
+
+
 </script>
 
 <template>
@@ -116,6 +130,7 @@ watch(currentlyFocusedInput, (currentValue: number | null, previousValue: number
             ref="mathCharacterButtonRef"
             id="mathCharacterButton"
             class="invisible"
+            @click="whenMathCharacterButtonIsClicked"
             >π</button>
     </div>
 </template>
