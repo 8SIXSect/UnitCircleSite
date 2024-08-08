@@ -20,3 +20,9 @@ export interface CoordinatesOfAngle {
     initialAngle: LineCoordinates;
     supplementaryAngle: LineCoordinates;
 }
+
+
+export const asViewWidth = (numberWithoutUnit: number): String => {
+    return `${numberWithoutUnit}vw`;
+}
+

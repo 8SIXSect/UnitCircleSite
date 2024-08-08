@@ -1,13 +1,30 @@
 <script setup lang="ts">
 
-import { computed, provide, ref, type ComputedRef, type Ref } from 'vue';
+import { computed, type ComputedRef } from 'vue';
 import DrawPairOfLinesForSlopeOfAngle from './DrawPairOfLinesForSlopeOfAngle.vue';
 import DrawSingleLineForSlopeOfAngle from './DrawSingleLineForSlopeOfAngle.vue';
 import InputBoxForRadians from './InputBoxForRadians.vue';
-import type { OrderedPair, CoordinatesOfAngle, LineCoordinates } from '@/shared_types';
-
+import CheckNumbersInCircleButton from './CheckNumbersInCircleButton.vue';
+import { type OrderedPair, type CoordinatesOfAngle, type LineCoordinates, asViewWidth } from '@/shared_types';
+import { useInputDataStore } from '@/stores/inputData';
+import { storeToRefs } from 'pinia';
 
 // note: SVG has reversed (or inverted?) coordinates so (r2/2, r2/2) is where (-r2/2, r2/2) should be
+
+
+const store = useInputDataStore();
+const { currentlyFocusedInput } = storeToRefs(store);
+
+/**
+    * Represents the diameter/width of the Unit Circle in `vw` units
+*/
+const unitCircleDiameter = 40;
+
+
+/**
+    * The CSS style will bind its height & width to this number
+*/
+const unitCircleDiameterWithUnit = asViewWidth(unitCircleDiameter);
 
 
 const xAxisNegativePair: OrderedPair = { x: -1, y: 0 };
@@ -139,18 +156,10 @@ const coordinatesForInputBoxes: OrderedPair[] = [
 ];
 
 
-/**
-    * Represents the index/id of the currently focused input
-    * The number acts as a way of identifying which input is currently focused
-*/
-const currentlyFocusedInput = ref<number | null>(null);
-provide("currentlyFocusedInput", currentlyFocusedInput);
-
-
 </script>
 
 <template>
-    <div class="h-screen flex justify-center items-center">
+    <div class="flex justify-center items-center my-8">
         <svg viewBox="-1 -1 2 2">
             <DrawSingleLineForSlopeOfAngle :coordinates="xAxis" />
             <DrawSingleLineForSlopeOfAngle :coordinates="yAxis" />
@@ -166,30 +175,24 @@ provide("currentlyFocusedInput", currentlyFocusedInput);
             v-for="(orderedPairForInputBox, index) in coordinatesForInputBoxes"
             :key="index"
             :coordinates-for-input="orderedPairForInputBox"
+            :is-focused="index === currentlyFocusedInput"
             :input-id="index"
+            :unit-circle-diameter="unitCircleDiameter"
             />
+
     </div>
+    <CheckNumbersInCircleButton />
 </template>
 
 <style scoped>
 
+
 svg {
-    width: 50vw;
-    height: 50vw;
+    height: v-bind("unitCircleDiameterWithUnit");
+    width: v-bind("unitCircleDiameterWithUnit");
 
     border-radius: 50%;
     border: 1px solid black;
-}
-
-.section {
-    stroke: black;
-    stroke-width: 1;
-}
-
-.circle {
-    fill: none;
-    stroke: black;
-    stroke-width: 2;
 }
 
 </style>

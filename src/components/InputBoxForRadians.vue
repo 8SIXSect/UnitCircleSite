@@ -1,7 +1,12 @@
 <script setup lang="ts">
 
 import type { OrderedPair } from '@/shared_types';
-import { type Ref, defineProps, ref, watch, onMounted, inject } from 'vue';
+import { useInputDataStore } from '@/stores/inputData';
+import { watch } from 'vue';
+import { type Ref, defineProps, ref, onMounted, inject } from 'vue';
+
+
+const store = useInputDataStore();
 
 
 /**
@@ -12,11 +17,13 @@ const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 const props = defineProps<{
     coordinatesForInput: OrderedPair,
-    inputId: number
+    isFocused: boolean,
+    inputId: number,
+    unitCircleDiameter: number
 }>();
 
 
-const { coordinatesForInput, inputId } = props;
+const { coordinatesForInput, inputId, unitCircleDiameter } = props;
 
 
 // TODO: add default value of pi or like a placeholder
@@ -43,10 +50,13 @@ const sanitizeInput = (event: Event) => {
 };
 
 
-// TODO: make 25vw dynamic and depend on a constant for the radius/diameter
-// 25(vw) is used because that's the radius of the Unit Circle here
-const translateX: number = 25 * coordinatesForInput.x;
-const translateY: number = 25 * coordinatesForInput.y;
+/**
+    * Represents the radius of the unit circle.
+    * This value is then used to move InputBox according to a coordinate pair
+*/
+const unitCircleRadius: number = unitCircleDiameter / 2;
+const translateX: number = unitCircleRadius * coordinatesForInput.x;
+const translateY: number = unitCircleRadius * coordinatesForInput.y;
 
 
 /**
@@ -66,48 +76,21 @@ const mathCharacterButtonRef = ref<HTMLButtonElement | null>(null);
 
 
 // Purpose: dynamically adjusts the width of `dummyDiv`
-onMounted(() => {
-    if ((mathCharacterButtonRef.value !== null) && (dummyDivRef.value !== null)) {
-        dummyDivRef.value.style.width = `${mathCharacterButtonRef.value.offsetWidth}px`;
-    }
-});
+watch(dummyDivRef, () => {
+    if (dummyDivRef.value === null) return;
+    if (mathCharacterButtonRef.value === null) return;
 
+    dummyDivRef.value.style.width = `${mathCharacterButtonRef.value.offsetWidth}px`;
 
-/**
-    * Provided by UnitCircle
-    * It's a number used to identify the input that is currerntly focused
-    * The number is the input's index which is also it's `inputId`
-*/
-const currentlyFocusedInput = inject("currentlyFocusedInput") as Ref<number | null>;
-
-
-/**
-    * Sets the visibility of the html button: #mathCharacterButton
-*/
-const setMathCharacterButtonVisibility = (visibility: "visible" | "hidden"): void => {
-    if (mathCharacterButtonRef.value !== null) {
-        mathCharacterButtonRef.value.style.visibility = visibility;
-    }
-};
-
+})
 
 /**
     * Whenever this input box is focused, its math button needs to be visible
     * Also, this func will be set as the currently focused input
 */
 const whenInputIsFocused = () => {
-    currentlyFocusedInput.value = inputId;
-    setMathCharacterButtonVisibility("visible");
+    store.currentlyFocusedInput = inputId;
 };
-
-
-// If there's a new current input but it's not the same as the original, then
-// it is set to hidden
-watch(currentlyFocusedInput, (currentValue: number | null, previousValue: number | null) => {
-    if ((inputId === previousValue) && (previousValue !== currentValue)) {
-        setMathCharacterButtonVisibility("hidden");
-    }
-});
 
 
 /**
@@ -124,7 +107,7 @@ const whenMathCharacterButtonIsClicked = () => {
 
 <template>
     <div id="inputBoxParentDiv" :style="divModifiedStyle">
-        <div ref="dummyDivRef" id="dummyDiv"></div>
+        <div v-if="isFocused" ref="dummyDivRef" id="dummyDiv"></div>
         <input
             class="rounded"
             v-model="inputBoxRef"
@@ -133,9 +116,9 @@ const whenMathCharacterButtonIsClicked = () => {
             @focus="whenInputIsFocused"
             />
         <button
+            v-if="isFocused"
             ref="mathCharacterButtonRef"
             id="mathCharacterButton"
-            class="invisible"
             @click="whenMathCharacterButtonIsClicked"
             >{{ PI_SYMBOL }}</button>
     </div>
