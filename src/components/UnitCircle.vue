@@ -3,7 +3,7 @@
 import { computed, type ComputedRef } from 'vue';
 import DrawPairOfLinesForSlopeOfAngle from './DrawPairOfLinesForSlopeOfAngle.vue';
 import DrawSingleLineForSlopeOfAngle from './DrawSingleLineForSlopeOfAngle.vue';
-import InputBoxForRadians from './InputBoxForRadians.vue';
+import InputBox from './text_entry_box/InputBox.vue';
 import CheckNumbersInCircleButton from './CheckNumbersInCircleButton.vue';
 import { type OrderedPair, type CoordinatesOfAngle, type LineCoordinates, asViewWidth } from '@/shared_types';
 import { useInputDataStore } from '@/stores/inputData';
@@ -171,7 +171,7 @@ const coordinatesForInputBoxes: OrderedPair[] = [
                 />
         </svg>
 
-        <InputBoxForRadians
+        <InputBox
             v-for="(orderedPairForInputBox, index) in coordinatesForInputBoxes"
             :key="index"
             :coordinates-for-input="orderedPairForInputBox"

@@ -1,18 +1,16 @@
 <script setup lang="ts">
 
+import MathCharacterButton from './MathCharacterButton.vue';
 import type { OrderedPair } from '@/shared_types';
 import { useInputDataStore } from '@/stores/inputData';
-import { watch } from 'vue';
-import { type Ref, defineProps, ref, onMounted, inject } from 'vue';
+import type { StyleValue } from 'vue';
+import { computed, inject } from 'vue';
+import { type Ref, ref } from 'vue';
 
+
+const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 const store = useInputDataStore();
-
-
-/**
-    * This is the PI character
-*/
-const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 
 const props = defineProps<{
@@ -27,12 +25,11 @@ const { coordinatesForInput, inputId, unitCircleDiameter } = props;
 
 
 // TODO: add default value of pi or like a placeholder
-const inputBoxRef: Ref<string> = ref<string>("");
-
 // TODO: when you add modes, this will need to depend on some state & input's width
 // should be equal to this so add that
-const inputBoxMaxLength: Ref<number> = ref<number>(5);
-const inputBoxWidth: string = `${inputBoxMaxLength.value + 2}ch`
+const inputBoxModel = ref<string>("");
+const inputBoxMaxLength = ref<number>(5);
+const inputBoxWidth = `${inputBoxMaxLength.value + 2}ch`
 
 
 /**
@@ -45,13 +42,12 @@ const sanitizeInput = (event: Event) => {
         const patternForReplacement: RegExp = /[^0-9/π]/g;
         const inputValue: string = event.target.value;
         
-        inputBoxRef.value = inputValue.replace(patternForReplacement, "");
+        inputBoxModel.value = inputValue.replace(patternForReplacement, "");
     }
 };
 
 
 /**
-    * Represents the radius of the unit circle.
     * This value is then used to move InputBox according to a coordinate pair
 */
 const unitCircleRadius: number = unitCircleDiameter / 2;
@@ -62,65 +58,41 @@ const translateY: number = unitCircleRadius * coordinatesForInput.y;
 /**
     * Translate will position the input in desired location on the Unit Circle
 */
-const divModifiedStyle = {
+const divModifiedStyle: StyleValue = {
     transform: `translate(${translateX}vw, ${translateY}vw)`
 };
 
+const mathCharButtonWidth = "1ch";
 
-/**
-    * Purpose: Math button puts the input box off-center so I used a div that's
-    * invisible and set its width after the math char button's width is computed
-*/
-const dummyDivRef = ref<HTMLDivElement | null>(null);
-const mathCharacterButtonRef = ref<HTMLButtonElement | null>(null);
-
-
-// Purpose: dynamically adjusts the width of `dummyDiv`
-watch(dummyDivRef, () => {
-    if (dummyDivRef.value === null) return;
-    if (mathCharacterButtonRef.value === null) return;
-
-    dummyDivRef.value.style.width = `${mathCharacterButtonRef.value.offsetWidth}px`;
-
-})
-
-/**
-    * Whenever this input box is focused, its math button needs to be visible
-    * Also, this func will be set as the currently focused input
-*/
-const whenInputIsFocused = () => {
-    store.currentlyFocusedInput = inputId;
-};
+const getMarginLeft = computed(() => props.isFocused ? mathCharButtonWidth : "0px");
 
 
 /**
     * Purpose is to write a pi symbol in the inputBox when this button is clicked
 */
-const whenMathCharacterButtonIsClicked = () => {
-    if (inputBoxRef.value.length < inputBoxMaxLength.value) {
-        inputBoxRef.value += PI_SYMBOL;
+const addPiSymbolToInput = () => {
+    if (inputBoxModel.value.length < inputBoxMaxLength.value) {
+        inputBoxModel.value += PI_SYMBOL;
     }
 }
-
 
 </script>
 
 <template>
     <div id="inputBoxParentDiv" :style="divModifiedStyle">
-        <div v-if="isFocused" ref="dummyDivRef" id="dummyDiv"></div>
         <input
             class="rounded"
-            v-model="inputBoxRef"
+            v-model="inputBoxModel"
+            :style="{ marginLeft: getMarginLeft }"
             :maxlength="inputBoxMaxLength"
             @input="sanitizeInput"
-            @focus="whenInputIsFocused"
+            @focus="store.focusInput(inputId)"
             />
-        <button
-            v-if="isFocused"
-            ref="mathCharacterButtonRef"
-            id="mathCharacterButton"
-            @click="whenMathCharacterButtonIsClicked"
-            >{{ PI_SYMBOL }}</button>
+        <MathCharacterButton
+            :is-focused="isFocused"
+            :math-character-button-width="mathCharButtonWidth"
+            @add-pi-character="addPiSymbolToInput"
+            />
     </div>
 </template>
 
