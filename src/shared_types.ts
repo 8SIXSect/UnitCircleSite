@@ -11,18 +11,13 @@ export interface OrderedPair {
     * Represents the coordinates of a line as in their start & end points
     * These points can be used to describe the line's slope
 */
-export interface LineCoordinates {
+export interface CoordinatesOfLine {
     startPoint: OrderedPair,
     endPoint: OrderedPair
 }
 
 export interface CoordinatesOfAngle {
-    initialAngle: LineCoordinates;
-    supplementaryAngle: LineCoordinates;
-}
-
-
-export const asViewWidth = (numberWithoutUnit: number): String => {
-    return `${numberWithoutUnit}vw`;
+    initialAngle: CoordinatesOfLine;
+    supplementaryAngle: CoordinatesOfLine;
 }
 

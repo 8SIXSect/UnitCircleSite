@@ -5,7 +5,7 @@ import type { OrderedPair } from '@/shared_types';
 import { useInputDataStore } from '@/stores/inputData';
 import type { StyleValue } from 'vue';
 import { computed, inject } from 'vue';
-import { type Ref, ref } from 'vue';
+import { ref } from 'vue';
 
 
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
