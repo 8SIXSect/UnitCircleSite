@@ -117,3 +117,112 @@ export const coordinatesForInputBoxes: OrderedPair[] = [
     ...getAllPairsFromOriginalPair(sixtyDegreesPair)
 ];
 
+
+type AngleMode = "degrees" | "radians";
+
+
+/**
+    * Represents an angle that can be converted between degrees & radians
+*/ 
+class Angle {
+
+
+    /**
+        * The value of the angle in degrees or radians
+    */
+    public value: number;
+
+
+    /**
+        * The current mode of the angle
+    */
+    public mode: AngleMode;
+
+    
+    /**
+        * The coordinates corresponding to the angle
+        * ex: if mode is rad. and value is pi, then coordinates should be (-1, 0)
+    */ 
+    public coordinates: OrderedPair;
+
+    constructor(value: number, mode: AngleMode, coordinates: OrderedPair) {
+        this.value = value;
+        this.mode = mode;
+        this.coordinates = coordinates;
+    }
+
+    /**
+        * Returns a new `Angle` object in degrees mode and converts its value to deg. & rounds the final value
+        * If already in deg. mode, returns this
+    */
+    toDegrees(): Angle {
+        if (this.mode == "degrees") return this;
+
+        const valueAsDegrees: number = this.value * (180/Math.PI);
+        const roundedValue: number = Math.round(valueAsDegrees);
+        return new Angle(roundedValue, "degrees", this.coordinates);
+    }
+
+    /**
+        * Returns a new `Angle` object in radians mode and converts its value to rad.
+        * If already in rad. mode, returns this
+    */ 
+    toRadians(): Angle {
+        if (this.mode == "radians") return this;
+        return new Angle(this.value * (Math.PI/180), "radians", this.coordinates);
+    }
+
+    /**
+        * Returns a new `Angle` object using toDegrees or toRadians depending on the mode inputted
+    */ 
+    convertTo(newMode: AngleMode): Angle {
+        return newMode == "degrees" ? this.toDegrees() : this.toRadians();
+    }
+
+    toString(): string {
+        return `${this.value} ${this.mode == "degrees" ? "deg" : "rad"}`;
+    }
+}
+
+
+/**
+    * Returns the corresponding angle for an ordered pair in rad. mode
+    * ex: (sqrt2/2, sqrt2/2) -> pi/4 (will be a long, raw number)
+*/ 
+const orderedPairToAngle = (pair: OrderedPair): Angle => {
+    let angle: number = Math.acos(pair.x);
+
+    const signOfXForAngle = Math.sign(pair.x) as -1 | 0 | 1;
+    const signOfYForAngle = Math.sign(pair.y) as -1 | 0 | 1;
+
+    // If the y is >=0, then nothing's gotta be done
+    if (signOfYForAngle === -1) {
+
+        // For 0 or 1 X's
+        if (signOfXForAngle >= 0) {
+            angle = Math.PI*2 - angle;
+        } else {
+            angle += Math.PI / 2;
+        }
+    }
+
+    return new Angle(angle, "radians", pair);
+};
+
+
+const expectedValuesForPairs: Angle[] = coordinatesForInputBoxes
+    .map(orderedPairToAngle)
+    .map((angle: Angle) => angle.toDegrees())  // converts to degrees
+    .sort((a: Angle, b: Angle) => a.value - b.value);  // sort in ascending order
+
+
+export const getExpectedValueOfAngleAtPair = (mode: AngleMode, sourcePair: OrderedPair): number => {
+    return expectedValuesForPairs
+        .filter((targetAngle: Angle) => {
+            const { x,y } = targetAngle.coordinates;
+            return (x === sourcePair.x) && (y === sourcePair.y)
+        })
+        .at(0)!!.convertTo(mode)
+        .value;
+}
+

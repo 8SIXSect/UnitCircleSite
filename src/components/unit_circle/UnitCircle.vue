@@ -47,6 +47,7 @@ const computedAngleCoordsToDraw = computed<CoordinatesOfAngle[]>(() => ([
     buildCoordinatesOfAngle(sixtyDegreesPair)
 ]));
 
+
 </script>
 
 <template>

@@ -16,6 +16,7 @@ export interface CoordinatesOfLine {
     endPoint: OrderedPair
 }
 
+
 export interface CoordinatesOfAngle {
     initialAngle: CoordinatesOfLine;
     supplementaryAngle: CoordinatesOfLine;
