@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia';
 
 
 const store = useInputDataStore();
-const { userInputValues } = storeToRefs(store);
+const { userInputValues, correctInputIds } = storeToRefs(store);
 
 /*
 const emit = defineEmits<{
@@ -17,9 +17,19 @@ const emit = defineEmits<{
  * Handles the logic for when the check numbers button is clicked
 */
 const whenCheckNumbersIsClicked = () => {
-    const value = getExpectedValueOfAngleAtPair("degrees", {x:-1, y:0} );
-    console.log(value, userInputValues.value);
-    //emit("checkValue", )
+    //const __value__ = getExpectedValueOfAngleAtPair("degrees", {x:-1, y:0} );
+
+    Array.from(userInputValues.value)
+        .map((inputValue: String, index: number) => [inputValue, index])
+        .filter((valueIndexPair: (String | number)[]) => valueIndexPair[0] !== "")
+        .forEach((valueIndexPair: (String | number)[]) => {
+            const val = valueIndexPair[0] as String;
+            const index = valueIndexPair[1] as number;
+
+            if (val === "123") {
+                correctInputIds.value.push(index);
+            }
+        })
 }
 
 </script>

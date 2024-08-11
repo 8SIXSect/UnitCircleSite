@@ -17,6 +17,7 @@ const { userInputValues } = storeToRefs(store);
 const props = defineProps<{
     coordinatesForInput: OrderedPair,
     isFocused: boolean,
+    isCorrect: boolean,
     inputId: number,
     unitCircleDiameter: number
 }>();
@@ -64,7 +65,14 @@ const divModifiedStyle: StyleValue = {
 
 const mathCharButtonWidth = "1ch";
 
-const getMarginLeft = computed(() => props.isFocused ? mathCharButtonWidth : "0px");
+const inputBoxStyle = computed<StyleValue>(() => {
+    const isFocusedAndIncorrect: boolean = props.isFocused && !props.isCorrect;
+
+    return {
+        marginLeft: isFocusedAndIncorrect ? mathCharButtonWidth : "0px",
+        backgroundColor: props.isCorrect ? "gray" : "white"
+    }
+});
 
 
 /**
@@ -83,13 +91,14 @@ const addPiSymbolToInput = () => {
         <input
             class="rounded"
             v-model="userInputValues[inputId]"
-            :style="{ marginLeft: getMarginLeft }"
+            :style="inputBoxStyle"
             :maxlength="inputBoxMaxLength"
+            :disabled="isCorrect"
             @input="sanitizeInput"
             @focus="store.focusInput(inputId)"
             />
         <MathCharacterButton
-            :is-focused="isFocused"
+            :is-focused="isFocused && !isCorrect"
             :math-character-button-width="mathCharButtonWidth"
             @add-pi-character="addPiSymbolToInput"
             />

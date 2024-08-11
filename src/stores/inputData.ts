@@ -10,7 +10,8 @@ type FixedSizeArray<N extends number, T> = {
 
 interface State {
     currentlyFocusedInput: number
-    userInputValues: FixedSizeArray<16, string>
+    userInputValues: FixedSizeArray<16, string>,
+    correctInputIds: number[]
 }
 
 
@@ -22,7 +23,9 @@ export const useInputDataStore = defineStore("inputData", {
             // 16 input boxes so each value is an input box
             userInputValues: <FixedSizeArray<16, string>>Array
                 .from({ length: 16 })
-                .map(() => "")
+                .map(() => ""),
+
+            correctInputIds: []
         }
     },
     actions: {

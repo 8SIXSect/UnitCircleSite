@@ -17,7 +17,7 @@ import { inject } from 'vue';
 
 
 const store = useInputDataStore();
-const { currentlyFocusedInput } = storeToRefs(store);
+const { currentlyFocusedInput, correctInputIds } = storeToRefs(store);
 
 const asViewWidth = inject("asViewWidth") as (rawNumber: number) => string;
 
@@ -48,6 +48,15 @@ const computedAngleCoordsToDraw = computed<CoordinatesOfAngle[]>(() => ([
 ]));
 
 
+/**
+    * Returns a boolean meaning whether the input box for the `inputId` has a
+    * correct value
+*/
+const isInputCorrect = (inputId: number): boolean => {
+    return correctInputIds.value.includes(inputId);
+};
+
+
 </script>
 
 <template>
@@ -68,6 +77,7 @@ const computedAngleCoordsToDraw = computed<CoordinatesOfAngle[]>(() => ([
             :key="index"
             :coordinates-for-input="orderedPairForInputBox"
             :is-focused="index === currentlyFocusedInput"
+            :is-correct="isInputCorrect(index)"
             :input-id="index"
             :unit-circle-diameter="unitCircleDiameter"
             />
