@@ -3,6 +3,7 @@
 import MathCharacterButton from './MathCharacterButton.vue';
 import type { OrderedPair } from '@/shared_types';
 import { useInputDataStore } from '@/stores/inputData';
+import { storeToRefs } from 'pinia';
 import type { StyleValue } from 'vue';
 import { computed, inject } from 'vue';
 import { ref } from 'vue';
@@ -11,7 +12,7 @@ import { ref } from 'vue';
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 const store = useInputDataStore();
-
+const { userInputValues } = storeToRefs(store);
 
 const props = defineProps<{
     coordinatesForInput: OrderedPair,
@@ -27,7 +28,6 @@ const { coordinatesForInput, inputId, unitCircleDiameter } = props;
 // TODO: add default value of pi or like a placeholder
 // TODO: when you add modes, this will need to depend on some state & input's width
 // should be equal to this so add that
-const inputBoxModel = ref<string>("");
 const inputBoxMaxLength = ref<number>(5);
 const inputBoxWidth = `${inputBoxMaxLength.value + 2}ch`
 
@@ -42,7 +42,7 @@ const sanitizeInput = (event: Event) => {
         const patternForReplacement: RegExp = /[^0-9/π]/g;
         const inputValue: string = event.target.value;
         
-        inputBoxModel.value = inputValue.replace(patternForReplacement, "");
+        userInputValues.value[inputId] = inputValue.replace(patternForReplacement, "");
     }
 };
 
@@ -71,8 +71,8 @@ const getMarginLeft = computed(() => props.isFocused ? mathCharButtonWidth : "0p
     * Purpose is to write a pi symbol in the inputBox when this button is clicked
 */
 const addPiSymbolToInput = () => {
-    if (inputBoxModel.value.length < inputBoxMaxLength.value) {
-        inputBoxModel.value += PI_SYMBOL;
+    if (userInputValues.value[inputId].length < inputBoxMaxLength.value) {
+        userInputValues.value[inputId] += PI_SYMBOL;
     }
 }
 
@@ -82,7 +82,7 @@ const addPiSymbolToInput = () => {
     <div id="inputBoxParentDiv" :style="divModifiedStyle">
         <input
             class="rounded"
-            v-model="inputBoxModel"
+            v-model="userInputValues[inputId]"
             :style="{ marginLeft: getMarginLeft }"
             :maxlength="inputBoxMaxLength"
             @input="sanitizeInput"
