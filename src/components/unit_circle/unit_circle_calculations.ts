@@ -192,18 +192,9 @@ class Angle {
 const orderedPairToAngle = (pair: OrderedPair): Angle => {
     let angle: number = Math.acos(pair.x);
 
-    const signOfXForAngle = Math.sign(pair.x) as -1 | 0 | 1;
-    const signOfYForAngle = Math.sign(pair.y) as -1 | 0 | 1;
-
-    // If the y is >=0, then nothing's gotta be done
-    if (signOfYForAngle === -1) {
-
-        // For 0 or 1 X's
-        if (signOfXForAngle >= 0) {
-            angle = Math.PI*2 - angle;
-        } else {
-            angle += Math.PI / 2;
-        }
+    // If the y positive or zero, then nothing's gotta be done
+    if (Math.sign(pair.y) === -1) {
+        angle = Math.PI*2 - angle;
     }
 
     return new Angle(angle, "radians", pair);
@@ -213,13 +204,16 @@ const orderedPairToAngle = (pair: OrderedPair): Angle => {
 const expectedValuesForPairs: Angle[] = coordinatesForInputBoxes
     .map(orderedPairToAngle)
     .map((angle: Angle) => angle.toDegrees())  // converts to degrees
-    .sort((a: Angle, b: Angle) => a.value - b.value);  // sort in ascending order
 
 
+/**
+    * Returns the value that one should get given an angle mode and the angle's
+    * coordinate pair
+*/ 
 export const getExpectedValueOfAngleAtPair = (mode: AngleMode, sourcePair: OrderedPair): number => {
     return expectedValuesForPairs
         .filter((targetAngle: Angle) => {
-            const { x,y } = targetAngle.coordinates;
+            const { x, y } = targetAngle.coordinates;
             return (x === sourcePair.x) && (y === sourcePair.y)
         })
         .at(0)!!.convertTo(mode)
