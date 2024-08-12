@@ -5,6 +5,7 @@ import DrawPairOfLinesForSlopeOfAngle from '../DrawPairOfLinesForSlopeOfAngle.vu
 import DrawSingleLineForSlopeOfAngle from '../DrawSingleLineForSlopeOfAngle.vue';
 import InputBox from '../text_entry_box/InputBox.vue';
 import CheckNumbersInCircleButton from '../CheckNumbersInCircleButton.vue';
+import GameCompletedOverlay from '../GameCompletedOverlay.vue';
 import {
     yAxis, xAxis, buildCoordinatesOfAngle,
     thirtyDegreesPair, fortyFiveDegreesPair, sixtyDegreesPair,
@@ -60,6 +61,7 @@ const isInputCorrect = (inputId: number): boolean => {
 </script>
 
 <template>
+    <GameCompletedOverlay v-if="correctInputIds.length >= 2" />
     <div class="flex justify-center items-center my-8">
         <svg viewBox="-1 -1 2 2">
             <DrawSingleLineForSlopeOfAngle :coordinates="xAxis" />

@@ -8,18 +8,10 @@ import type { OrderedPair } from '@/shared_types';
 const store = useInputDataStore();
 const { userInputValues, correctInputIds } = storeToRefs(store);
 
-/*
-const emit = defineEmits<{
-    checkValue: [expectedValue: number]
-}>();
-*/
-
 /**
  * Handles the logic for when the check numbers button is clicked
 */
 const whenCheckNumbersIsClicked = () => {
-    //const __value__ = getExpectedValueOfAngleAtPair("degrees", {x:-1, y:0} );
-
     Array.from(userInputValues.value)
         .map((inputValue: string, index: number) => [inputValue, index])
         .filter((valueIndexPair: (string | number)[]) => valueIndexPair[0] !== "")
@@ -28,19 +20,23 @@ const whenCheckNumbersIsClicked = () => {
             const inputBoxValue = valueIndexPair[0] as string;
             const inputId = valueIndexPair[1] as number;
 
-            const sourcePair: OrderedPair = coordinatesForInputBoxes[inputId]
-            const adjustedPair: OrderedPair = {
-                x: sourcePair.x,
-                y: -sourcePair.y
-            }
 
-            const expectedValue: number = getExpectedValueOfAngleAtPair("degrees", adjustedPair);
-            
-            // here's where you would check deg/rad mode
-            const inputBoxValueAsNumber: number = Number.parseInt(inputBoxValue)
+            if (!correctInputIds.value.includes(inputId)) {
 
-            if (expectedValue === inputBoxValueAsNumber) {
-                correctInputIds.value.push(inputId);
+                const sourcePair: OrderedPair = coordinatesForInputBoxes[inputId]
+                const adjustedPair: OrderedPair = {
+                    x: sourcePair.x,
+                    y: -sourcePair.y
+                }
+
+                const expectedValue: number = getExpectedValueOfAngleAtPair("degrees", adjustedPair);
+                
+                // here's where you would check deg/rad mode
+                const inputBoxValueAsNumber: number = Number.parseInt(inputBoxValue)
+
+                if (expectedValue === inputBoxValueAsNumber) {
+                    correctInputIds.value.push(inputId);
+                }
             }
         })
 }
