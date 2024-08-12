@@ -26,7 +26,6 @@ const { coordinatesForInput, inputId, unitCircleDiameter } = props;
 
 
 // TODO: add default value of pi or like a placeholder
-
 const inputBoxWidth = computed<string>(() => `${maxLengthForInputBox.value + 2}ch`);
 
 
