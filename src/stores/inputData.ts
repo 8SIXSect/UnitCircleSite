@@ -45,11 +45,17 @@ export const useInputDataStore = defineStore("inputData", {
             * The purpose of this action is to change the current angle mode to
             * its opposite.
             * So if the current mode is radians, then degrees will be set
+            * Additionally, the state of this store will be reset before changing
+            * the current angle mode
         */
         switchAngleMode() {
-            this.currentAngleMode = (
+            const angleModeToSwitchTo: AngleMode = (
                 this.currentAngleMode === "degrees" ? "radians" : "degrees"
             );
+
+            this.$reset();
+
+            this.currentAngleMode = angleModeToSwitchTo;
         }
 
     },

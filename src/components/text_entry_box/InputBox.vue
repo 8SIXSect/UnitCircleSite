@@ -12,7 +12,7 @@ import { ref } from 'vue';
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 const store = useInputDataStore();
-const { userInputValues, currentAngleMode, isRadiansEnabled } = storeToRefs(store);
+const { userInputValues, isRadiansEnabled } = storeToRefs(store);
 
 const props = defineProps<{
     coordinatesForInput: OrderedPair,
@@ -39,17 +39,10 @@ const inputBoxWidth = `${inputBoxMaxLength.value + 2}ch`
 const sanitizeInput = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
         
-        let patternForReplacement: RegExp;
-        
-        if (currentAngleMode.value === "radians") {
-
-            // Allows: digits, '/' and pi symbol
-            patternForReplacement = /[^0-9/π]/g;
-        } else {
-
-            // Allows: digits only
-            patternForReplacement = /[^0-9]/g
-        }
+        // When in rad. mode, allow for pi-symbol & slash symbol (division)
+        const patternForReplacement: RegExp = (
+            isRadiansEnabled.value ? /[^0-9/π]/g : /[^0-9]/g
+        );
 
         const inputValue: string = event.target.value;
         userInputValues.value[inputId] = inputValue.replace(patternForReplacement, "");
@@ -72,6 +65,11 @@ const divModifiedStyle: StyleValue = {
     transform: `translate(${translateX}vw, ${translateY}vw)`
 };
 
+
+/**
+    * The math character button is only going to be the PI symbol which is a single
+    * character
+*/
 const mathCharButtonWidth = "1ch";
 
 const inputBoxStyle = computed<StyleValue>(() => {
