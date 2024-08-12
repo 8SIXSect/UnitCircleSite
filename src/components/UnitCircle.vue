@@ -1,20 +1,21 @@
 <script setup lang="ts">
 
 import { computed } from 'vue';
-import DrawPairOfLinesForSlopeOfAngle from '../DrawPairOfLinesForSlopeOfAngle.vue';
-import DrawSingleLineForSlopeOfAngle from '../DrawSingleLineForSlopeOfAngle.vue';
-import InputBox from '../text_entry_box/InputBox.vue';
-import CheckNumbersInCircleButton from '../CheckNumbersInCircleButton.vue';
-import GameCompletedOverlay from '../GameCompletedOverlay.vue';
+import DrawSingleLineForSlopeOfAngle from './unit_circle/DrawSingleLineForSlopeOfAngle.vue';
+import DrawPairOfLinesForSlopeOfAngle from './unit_circle/DrawPairOfLinesForSlopeOfAngle.vue';
+import InputBox from './text_entry_box/InputBox.vue';
+import CheckNumbersInCircleButton from './CheckNumbersInCircleButton.vue';
+import GameCompletedOverlay from './GameCompletedOverlay.vue';
 import {
     yAxis, xAxis, buildCoordinatesOfAngle,
     thirtyDegreesPair, fortyFiveDegreesPair, sixtyDegreesPair,
     coordinatesForInputBoxes
-} from './unit_circle_calculations'; 
+} from './unit_circle/unit_circle_calculations'; 
 import { type CoordinatesOfAngle } from '@/shared_types';
 import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
 import { inject } from 'vue';
+import UnitCircleMode from './unit_circle/UnitCircleMode.vue';
 
 
 const store = useInputDataStore();
@@ -61,6 +62,7 @@ const isInputCorrect = (inputId: number): boolean => {
 </script>
 
 <template>
+    <UnitCircleMode />
     <GameCompletedOverlay v-if="correctInputIds.length >= 2" />
     <div class="flex justify-center items-center my-8">
         <svg viewBox="-1 -1 2 2">

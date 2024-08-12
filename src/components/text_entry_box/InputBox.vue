@@ -12,7 +12,7 @@ import { ref } from 'vue';
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 const store = useInputDataStore();
-const { userInputValues } = storeToRefs(store);
+const { userInputValues, currentAngleMode } = storeToRefs(store);
 
 const props = defineProps<{
     coordinatesForInput: OrderedPair,
@@ -39,10 +39,19 @@ const inputBoxWidth = `${inputBoxMaxLength.value + 2}ch`
 const sanitizeInput = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
         
-        // Allows: digits, '/' and pi symbol
-        const patternForReplacement: RegExp = /[^0-9/π]/g;
-        const inputValue: string = event.target.value;
+        let patternForReplacement: RegExp;
         
+        if (currentAngleMode.value === "radians") {
+
+            // Allows: digits, '/' and pi symbol
+            patternForReplacement = /[^0-9/π]/g;
+        } else {
+
+            // Allows: digits only
+            patternForReplacement = /[^0-9]/g
+        }
+
+        const inputValue: string = event.target.value;
         userInputValues.value[inputId] = inputValue.replace(patternForReplacement, "");
     }
 };

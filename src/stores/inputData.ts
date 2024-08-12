@@ -1,3 +1,4 @@
+import type { AngleMode } from "@/shared_types";
 import { defineStore } from "pinia";
 
 
@@ -11,7 +12,8 @@ type FixedSizeArray<N extends number, T> = {
 interface State {
     currentlyFocusedInput: number
     userInputValues: FixedSizeArray<16, string>,
-    correctInputIds: number[]
+    correctInputIds: number[],
+    currentAngleMode: AngleMode
 }
 
 
@@ -25,17 +27,31 @@ export const useInputDataStore = defineStore("inputData", {
                 .from({ length: 16 })
                 .map(() => ""),
 
-            correctInputIds: []
+            correctInputIds: [],
+
+            currentAngleMode: "degrees"
         }
     },
     actions: {
         /**
-            * test doc string
-            *
+            * Purpose of this action is to change the currently focused input id
+            * to the given `inputId`
         */
         focusInput(inputId: number) {
             this.currentlyFocusedInput = inputId
+        },
+
+        /**
+            * The purpose of this action is to change the current angle mode to
+            * its opposite.
+            * So if the current mode is radians, then degrees will be set
+        */
+        switchAngleMode() {
+            this.currentAngleMode = (
+                this.currentAngleMode === "degrees" ? "radians" : "degrees"
+            );
         }
+
     }
 })
 

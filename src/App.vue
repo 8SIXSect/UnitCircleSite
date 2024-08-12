@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import UnitCircle from './components/unit_circle/UnitCircle.vue';
+import UnitCircle from './components/UnitCircle.vue';
 
 </script>
 

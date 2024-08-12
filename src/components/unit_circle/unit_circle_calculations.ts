@@ -1,4 +1,4 @@
-import type { OrderedPair, CoordinatesOfLine, CoordinatesOfAngle } from "@/shared_types";
+import type { OrderedPair, CoordinatesOfLine, CoordinatesOfAngle, AngleMode } from "@/shared_types";
 
 
 // note: SVG has reversed (or inverted?) coordinates so (r2/2, r2/2) is where (-r2/2, r2/2) should be
@@ -118,7 +118,6 @@ export const coordinatesForInputBoxes: OrderedPair[] = [
 ];
 
 
-type AngleMode = "degrees" | "radians";
 
 
 /**

@@ -22,3 +22,6 @@ export interface CoordinatesOfAngle {
     supplementaryAngle: CoordinatesOfLine;
 }
 
+
+export type AngleMode = "degrees" | "radians";
+
