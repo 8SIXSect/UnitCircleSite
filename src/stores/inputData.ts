@@ -52,6 +52,10 @@ export const useInputDataStore = defineStore("inputData", {
             );
         }
 
+    },
+    getters: {
+        isDegreesEnabled: (state: State) => state.currentAngleMode === 'degrees',
+        isRadiansEnabled: (state: State) => state.currentAngleMode === 'radians'
     }
 })
 

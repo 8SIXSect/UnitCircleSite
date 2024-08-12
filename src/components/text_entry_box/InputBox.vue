@@ -12,7 +12,7 @@ import { ref } from 'vue';
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 const store = useInputDataStore();
-const { userInputValues, currentAngleMode } = storeToRefs(store);
+const { userInputValues, currentAngleMode, isRadiansEnabled } = storeToRefs(store);
 
 const props = defineProps<{
     coordinatesForInput: OrderedPair,
@@ -75,10 +75,14 @@ const divModifiedStyle: StyleValue = {
 const mathCharButtonWidth = "1ch";
 
 const inputBoxStyle = computed<StyleValue>(() => {
-    const isFocusedAndIncorrect: boolean = props.isFocused && !props.isCorrect;
+
+    const marginLeft: string = (
+        isRadiansEnabled.value && props.isFocused && !props.isCorrect ?
+        mathCharButtonWidth : "0px"
+    );
 
     return {
-        marginLeft: isFocusedAndIncorrect ? mathCharButtonWidth : "0px",
+        marginLeft: marginLeft,
         backgroundColor: props.isCorrect ? "gray" : "white"
     }
 });
@@ -107,6 +111,7 @@ const addPiSymbolToInput = () => {
             @focus="store.focusInput(inputId)"
             />
         <MathCharacterButton
+            v-if="isRadiansEnabled"
             :is-focused="isFocused && !isCorrect"
             :math-character-button-width="mathCharButtonWidth"
             @add-pi-character="addPiSymbolToInput"
