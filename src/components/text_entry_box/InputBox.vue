@@ -6,13 +6,12 @@ import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
 import type { StyleValue } from 'vue';
 import { computed, inject } from 'vue';
-import { ref } from 'vue';
 
 
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 const store = useInputDataStore();
-const { userInputValues, isRadiansEnabled } = storeToRefs(store);
+const { userInputValues, isRadiansEnabled, maxLengthForInputBox } = storeToRefs(store);
 
 const props = defineProps<{
     coordinatesForInput: OrderedPair,
@@ -27,10 +26,8 @@ const { coordinatesForInput, inputId, unitCircleDiameter } = props;
 
 
 // TODO: add default value of pi or like a placeholder
-// TODO: when you add modes, this will need to depend on some state & input's width
-// should be equal to this so add that
-const inputBoxMaxLength = ref<number>(5);
-const inputBoxWidth = `${inputBoxMaxLength.value + 2}ch`
+
+const inputBoxWidth = computed<string>(() => `${maxLengthForInputBox.value + 2}ch`);
 
 
 /**
@@ -90,7 +87,7 @@ const inputBoxStyle = computed<StyleValue>(() => {
     * Purpose is to write a pi symbol in the inputBox when this button is clicked
 */
 const addPiSymbolToInput = () => {
-    if (userInputValues.value[inputId].length < inputBoxMaxLength.value) {
+    if (userInputValues.value[inputId].length < maxLengthForInputBox.value) {
         userInputValues.value[inputId] += PI_SYMBOL;
     }
 }
@@ -103,7 +100,7 @@ const addPiSymbolToInput = () => {
             class="rounded"
             v-model="userInputValues[inputId]"
             :style="inputBoxStyle"
-            :maxlength="inputBoxMaxLength"
+            :maxlength="maxLengthForInputBox"
             :disabled="isCorrect"
             @input="sanitizeInput"
             @focus="store.focusInput(inputId)"

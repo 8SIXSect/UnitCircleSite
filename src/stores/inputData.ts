@@ -60,8 +60,17 @@ export const useInputDataStore = defineStore("inputData", {
 
     },
     getters: {
+        // this first getter may be unnecessary
         isDegreesEnabled: (state: State) => state.currentAngleMode === 'degrees',
-        isRadiansEnabled: (state: State) => state.currentAngleMode === 'radians'
+        isRadiansEnabled: (state: State) => state.currentAngleMode === 'radians',
+
+        /**
+        * In rad. mode, the largest input is: 11pi/6 (5 characters w/ pi symbol)
+        * In deg. mode, you'll never have an input larger than 3 characters
+        */
+        maxLengthForInputBox(): number {
+            return this.isRadiansEnabled ? 5 : 3;
+        }
     }
 })
 
