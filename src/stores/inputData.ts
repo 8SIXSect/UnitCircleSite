@@ -1,4 +1,4 @@
-import type { AngleMode } from "@/shared_types";
+import type { AngleMode } from "@/components/unit_circle/unit_circle_calculations";
 import { defineStore } from "pinia";
 
 

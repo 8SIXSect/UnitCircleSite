@@ -1,7 +1,10 @@
-import type { OrderedPair, CoordinatesOfLine, CoordinatesOfAngle, AngleMode } from "@/shared_types";
-
-
-// note: SVG has reversed (or inverted?) coordinates so (r2/2, r2/2) is where (-r2/2, r2/2) should be
+/**
+    * Pair of numbers that represent a point on the unit circle or on a 2D plane
+*/
+export interface OrderedPair {
+    readonly x: number,
+    readonly y: number
+}
 
 
 const xAxisNegativePair: OrderedPair = { x: -1, y: 0 };
@@ -9,6 +12,16 @@ const xAxisPositivePair: OrderedPair = { x: 1, y: 0 };
 
 const yAxisNegativePair: OrderedPair = { x: 0, y: -1 };
 const yAxisPositivePair: OrderedPair = { x: 0, y: 1 };
+
+
+/**
+    * Represents the coordinates of a line as in their start & end points
+    * These points can be used to describe the line's slope
+*/
+export interface CoordinatesOfLine {
+    startPoint: OrderedPair,
+    endPoint: OrderedPair
+}
 
 
 /**
@@ -30,10 +43,18 @@ export const yAxis: CoordinatesOfLine = {
 
 
 /**
+    * Represents the coordinates for the slopes of two complementary angles
+    * So, `initialAngle` may have the coordinates for 30 degrees
+    * and `supplementaryAngle` would then have coordinates for 150 degrees
+*/ 
+export interface CoordinatesOfAngle {
+    initialAngle: CoordinatesOfLine;
+    supplementaryAngle: CoordinatesOfLine;
+}
+
+
+/**
     * Orders the coordinates in a way so that their slopes can be drawn
-    * @param positivePoint an ordered pair that represents the positive
-    * x's and y's of the coordinates for the angle
-    * @returns CoordinatesOfAngle object
 */
 export const buildCoordinatesOfAngle = (positivePoint: OrderedPair): CoordinatesOfAngle => {
     const negX: number = positivePoint.x * -1;
@@ -65,12 +86,10 @@ export const thirtyDegreesPair: OrderedPair = {
     y: 1 / 2
 };
 
-
 export const fortyFiveDegreesPair: OrderedPair = {
     x: Math.SQRT2 / 2,
     y: Math.SQRT2 / 2
 };
-
 
 export const sixtyDegreesPair: OrderedPair = {
     x: 1 / 2,
@@ -104,7 +123,6 @@ const getAllPairsFromOriginalPair = (orderedPair: OrderedPair): OrderedPair[] =>
 };
 
 
-
 /**
     * OrderedPair Coordinates for the points where input boxes will be put
 */
@@ -118,6 +136,7 @@ export const coordinatesForInputBoxes: OrderedPair[] = [
 ];
 
 
+export type AngleMode = "degrees" | "radians";
 
 
 /**
@@ -144,6 +163,7 @@ class Angle {
     */ 
     public coordinates: OrderedPair;
 
+
     constructor(value: number, mode: AngleMode, coordinates: OrderedPair) {
         this.value = value;
         this.mode = mode;
@@ -151,11 +171,11 @@ class Angle {
     }
 
     /**
-        * Returns a new `Angle` object in degrees mode and converts its value to deg. & rounds the final value
-        * If already in deg. mode, returns this
+        * Returns a new `Angle` object in degrees mode and converts its value to
+        * deg. then rounds the final value. If already in deg. mode, returns `this`
     */
     toDegrees(): Angle {
-        if (this.mode == "degrees") return this;
+        if (this.mode === "degrees") return this;
 
         const valueAsDegrees: number = this.value * (180/Math.PI);
         const roundedValue: number = Math.round(valueAsDegrees);
@@ -164,10 +184,10 @@ class Angle {
 
     /**
         * Returns a new `Angle` object in radians mode and converts its value to rad.
-        * If already in rad. mode, returns this
+        * If already in rad. mode, returns `this`
     */ 
     toRadians(): Angle {
-        if (this.mode == "radians") return this;
+        if (this.mode === "radians") return this;
         return new Angle(this.value * (Math.PI/180), "radians", this.coordinates);
     }
 
@@ -175,18 +195,18 @@ class Angle {
         * Returns a new `Angle` object using toDegrees or toRadians depending on the mode inputted
     */ 
     convertTo(newMode: AngleMode): Angle {
-        return newMode == "degrees" ? this.toDegrees() : this.toRadians();
+        return newMode === "degrees" ? this.toDegrees() : this.toRadians();
     }
 
     toString(): string {
-        return `${this.value} ${this.mode == "degrees" ? "deg" : "rad"}`;
+        return `${this.value} ${this.mode === "degrees" ? "deg" : "rad"}`;
     }
 }
 
 
 /**
     * Returns the corresponding angle for an ordered pair in rad. mode
-    * ex: (sqrt2/2, sqrt2/2) -> pi/4 (will be a long, raw number)
+    * ex: (sqrt2/2, sqrt2/2) -> pi/4 (will be a long, raw number; not string)
 */ 
 const orderedPairToAngle = (pair: OrderedPair): Angle => {
     let angle: number = Math.acos(pair.x);

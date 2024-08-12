@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useInputDataStore } from '@/stores/inputData';
-import { coordinatesForInputBoxes, getExpectedValueOfAngleAtPair } from './unit_circle/unit_circle_calculations';
+import {
+    coordinatesForInputBoxes, getExpectedValueOfAngleAtPair, type OrderedPair
+} from './unit_circle/unit_circle_calculations';
 import { storeToRefs } from 'pinia';
-import type { OrderedPair } from '@/shared_types';
 import { evaluate } from "mathjs"
 import { inject } from "vue";
 

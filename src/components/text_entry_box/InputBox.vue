@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import MathCharacterButton from './MathCharacterButton.vue';
-import type { OrderedPair } from '@/shared_types';
+import type { OrderedPair } from '@/components/unit_circle/unit_circle_calculations';
 import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
 import type { StyleValue } from 'vue';

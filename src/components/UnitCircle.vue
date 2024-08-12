@@ -4,14 +4,11 @@ import { computed } from 'vue';
 import DrawSingleLineForSlopeOfAngle from './unit_circle/DrawSingleLineForSlopeOfAngle.vue';
 import DrawPairOfLinesForSlopeOfAngle from './unit_circle/DrawPairOfLinesForSlopeOfAngle.vue';
 import InputBox from './text_entry_box/InputBox.vue';
-import CheckNumbersInCircleButton from './CheckNumbersInCircleButton.vue';
-import GameCompletedOverlay from './GameCompletedOverlay.vue';
 import {
     yAxis, xAxis, buildCoordinatesOfAngle,
     thirtyDegreesPair, fortyFiveDegreesPair, sixtyDegreesPair,
-    coordinatesForInputBoxes
+    coordinatesForInputBoxes, type CoordinatesOfAngle
 } from './unit_circle/unit_circle_calculations'; 
-import { type CoordinatesOfAngle } from '@/shared_types';
 import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
 import { inject } from 'vue';
@@ -58,12 +55,10 @@ const isInputCorrect = (inputId: number): boolean => {
     return correctInputIds.value.includes(inputId);
 };
 
-
 </script>
 
 <template>
     <UnitCircleMode />
-    <GameCompletedOverlay v-if="correctInputIds.length >= 2" />
     <div class="flex justify-center items-center my-8">
         <svg viewBox="-1 -1 2 2">
             <DrawSingleLineForSlopeOfAngle :coordinates="xAxis" />
@@ -87,7 +82,6 @@ const isInputCorrect = (inputId: number): boolean => {
             />
 
     </div>
-    <CheckNumbersInCircleButton />
 </template>
 
 <style scoped>

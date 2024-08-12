@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { LineCoordinates } from '@/shared_types';
+import type { CoordinatesOfLine } from '@/components/unit_circle/unit_circle_calculations';
 
 
 const props = defineProps<{
-    coordinates: LineCoordinates
+    coordinates: CoordinatesOfLine
 }>();
 
 const { coordinates } = props;
