@@ -77,7 +77,8 @@ const inputBoxStyle = computed<StyleValue>(() => {
 
     return {
         marginLeft: marginLeft,
-        backgroundColor: props.isCorrect ? "gray" : "white"
+        backgroundColor: props.isCorrect ? "gray" : "white",
+        width: inputBoxWidth.value
     }
 });
 
@@ -96,7 +97,7 @@ const addPiSymbolToInput = () => {
 <template>
     <div class="flex absolute z-10" :style="divModifiedStyle">
         <input
-            class="rounded"
+            class="rounded text-center p-0 outline-none border border-solid border-black"
             v-model="userInputValues[inputId]"
             :style="inputBoxStyle"
             :maxlength="maxLengthForInputBox"
@@ -112,18 +113,4 @@ const addPiSymbolToInput = () => {
             />
     </div>
 </template>
-
-<style scoped>
-
-input {
-    z-index: inherit;
-    text-align: center;
-    padding: 0;
-
-    outline: none;
-    border: 1px solid black;
-    width: v-bind("inputBoxWidth");
-}
-
-</style>
 
