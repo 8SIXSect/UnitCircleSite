@@ -1,7 +1,7 @@
 import { getInputBoxWithAngleNinetyDegrees, getCheckNumbersButton } from "../support/commands"
 
 
-describe("Inputting values into one input box on the unit circle", () => {
+describe("Inputting values into one input box on the unit circle (degrees mode)", () => {
     beforeEach(() => {
         cy.visit("/")
 
@@ -13,11 +13,13 @@ describe("Inputting values into one input box on the unit circle", () => {
             .should("be.disabled")  // whichever is disabled is the mode we are in
     })
 
+
     it("input invalid data into entry box", () => {
         getInputBoxWithAngleNinetyDegrees()
             .type("you can't type non-digits in here while in degrees mode")
             .should("have.value", "")
     })
+
 
     it("input valid number entry box but it will be incorrect angle", () => {
         getInputBoxWithAngleNinetyDegrees()
@@ -30,6 +32,7 @@ describe("Inputting values into one input box on the unit circle", () => {
         getInputBoxWithAngleNinetyDegrees()
             .should("not.be.disabled")
     })
+
 
     it("input valid number entry box with the correct angle", () => {
         getInputBoxWithAngleNinetyDegrees()
