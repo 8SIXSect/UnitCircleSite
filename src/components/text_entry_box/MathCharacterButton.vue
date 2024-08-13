@@ -20,6 +20,7 @@ const props = defineProps<{
     <button
         v-if="isFocused"
         id="mathCharacterButton"
+        class="border-y border-r border-solid border-black text-center rounded-r bg-white hover:bg-gray-300"
         @click="$emit('addPiCharacter')"
         >{{ PI_SYMBOL }}</button>
 </template>

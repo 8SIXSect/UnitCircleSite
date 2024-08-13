@@ -6,7 +6,7 @@ const tailwindConfig = {
     theme: {
         extend: {
             width: {
-                "base": "85vw"
+                "base": "80vw"
             }
         },
     },

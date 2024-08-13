@@ -39,7 +39,7 @@ const { coordinatesForInput, inputId } = props;
 
 
 // TODO: add default value of pi or like a placeholder
-const inputBoxWidth = computed<string>(() => `${maxLengthForInputBox.value + 2}ch`);
+const inputBoxWidth = computed<string>(() => `${maxLengthForInputBox.value + 1}ch`);
 
 
 /**
@@ -88,17 +88,29 @@ const divModifiedStyle = computed<StyleValue>(() => {
 
 /**
     * The math character button is only going to be the PI symbol which is a single
-    * character
+    * character. But, a second one is added for space
 */
-const mathCharButtonWidth = "1ch";
+const mathCharButtonWidth = "2ch";
+
+
+/**
+    * This is used to determine if a Math Char Button should be placed.
+    * A button will not be placed on the far right of x-axis
+*/
+const isXAxisInput = inputId === 0;
+
 
 const inputBoxStyle = computed<StyleValue>(() => {
 
-    const marginLeft: string = (
-        isRadiansEnabled.value && props.isFocused && !props.isCorrect ?
-        mathCharButtonWidth : "0px"
-    );
+    const conditionsForMargin: boolean = (
+        isRadiansEnabled.value && props.isFocused && !props.isCorrect
+    )
 
+    // When inputId is 0, having button on right side is bad
+    const marginLeft: string = (
+        conditionsForMargin && !isXAxisInput ? mathCharButtonWidth : "0px"
+    );
+    
     return {
         marginLeft: marginLeft,
         backgroundColor: props.isCorrect ? "gray" : "white",
@@ -121,7 +133,7 @@ const addPiSymbolToInput = () => {
 <template>
     <div class="flex absolute z-10" :style="divModifiedStyle">
         <input
-            class="rounded text-center p-0 outline-none border border-solid border-black text-md"
+            class="rounded-l text-center p-0 outline-none border border-solid border-black text-md"
             v-model="userInputValues[inputId]"
             :style="inputBoxStyle"
             :maxlength="maxLengthForInputBox"
@@ -131,7 +143,7 @@ const addPiSymbolToInput = () => {
             />
 
         <MathCharacterButton
-            v-if="isRadiansEnabled"
+            v-if="isRadiansEnabled && !isXAxisInput"
             :is-focused="isFocused && !isCorrect"
             :math-character-button-width="mathCharButtonWidth"
             @add-pi-character="addPiSymbolToInput"
