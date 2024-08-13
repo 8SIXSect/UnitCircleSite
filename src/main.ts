@@ -9,6 +9,5 @@ const app = createApp(App)
 
 app.use(pinia)
 app.provide("PI_SYMBOL", "π")
-app.provide("asViewWidth", (rawNumber: number): String => `${rawNumber}vw`);
 
 app.mount('#app')

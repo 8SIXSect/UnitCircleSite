@@ -11,30 +11,13 @@ import {
 } from './unit_circle/unit_circle_calculations'; 
 import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
-import { inject } from 'vue';
 import UnitCircleMode from './unit_circle/UnitCircleMode.vue';
-import type { StyleValue } from 'vue';
+import { ref } from 'vue';
+import { onMounted } from 'vue';
 
 
 const store = useInputDataStore();
 const { currentlyFocusedInput, correctInputIds } = storeToRefs(store);
-
-const asViewWidth = inject("asViewWidth") as (rawNumber: number) => string;
-
-
-/**
-    * Represents the diameter/width of the Unit Circle in `vw` units
-*/
-const unitCircleDiameter = 40;
-
-
-/**
-    * CSS styles used to bind the width & height of the unit circle to constants
-*/
-const unitCircleStyles: StyleValue = {
-    width: asViewWidth(unitCircleDiameter),
-    height: asViewWidth(unitCircleDiameter)
-}
 
 
 /**
@@ -58,12 +41,30 @@ const isInputCorrect = (inputId: number): boolean => {
     return correctInputIds.value.includes(inputId);
 };
 
+
+/**
+    * Represents the diameter/width of the Unit Circle in `vw` units
+*/
+const unitCircleDiameter = ref<number>(0);
+const unitCircleRef = ref<null | HTMLElement>(null);
+
+onMounted(() => {
+    if (unitCircleRef.value !== null) {
+        const unitCircleComputedStyles = window.getComputedStyle(unitCircleRef.value)
+        const widthAsPixels = parseFloat(unitCircleComputedStyles.width)
+
+        // This converts the width from pixels to view width
+        unitCircleDiameter.value = (widthAsPixels / window.innerWidth) * 100
+    }
+})
+
+
 </script>
 
 <template>
     <UnitCircleMode />
     <div class="flex justify-center items-center my-8">
-        <svg viewBox="-1 -1 2 2" class="border border-solid border-black rounded-full" :style="unitCircleStyles">
+        <svg viewBox="-1 -1 2 2" class="border border-solid border-black rounded-full w-uc" ref="unitCircleRef">
             <DrawSingleLineForSlopeOfAngle :coordinates="xAxis" />
             <DrawSingleLineForSlopeOfAngle :coordinates="yAxis" />
 
@@ -83,7 +84,6 @@ const isInputCorrect = (inputId: number): boolean => {
             :input-id="index"
             :unit-circle-diameter="unitCircleDiameter"
             />
-
     </div>
 </template>
 

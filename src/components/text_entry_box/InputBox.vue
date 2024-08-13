@@ -22,7 +22,7 @@ const props = defineProps<{
 }>();
 
 
-const { coordinatesForInput, inputId, unitCircleDiameter } = props;
+const { coordinatesForInput, inputId } = props;
 
 
 // TODO: add default value of pi or like a placeholder
@@ -47,19 +47,17 @@ const sanitizeInput = (event: Event) => {
 
 
 /**
-    * This value is then used to move InputBox according to a coordinate pair
-*/
-const unitCircleRadius: number = unitCircleDiameter / 2;
-const translateX: number = unitCircleRadius * coordinatesForInput.x;
-const translateY: number = unitCircleRadius * coordinatesForInput.y;
-
-
-/**
     * Translate will position the input in desired location on the Unit Circle
 */
-const divModifiedStyle: StyleValue = {
-    transform: `translate(${translateX}vw, ${translateY}vw)`
-};
+const divModifiedStyle = computed<StyleValue>(() => {
+    const unitCircleRadius: number = props.unitCircleDiameter / 2;
+    const translateX: number = unitCircleRadius * coordinatesForInput.x;
+    const translateY: number = unitCircleRadius * coordinatesForInput.y;
+
+    return {
+        transform: `translate(${translateX}vw, ${translateY}vw)`
+    }
+});
 
 
 /**
