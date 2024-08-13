@@ -10,6 +10,19 @@ import { computed, inject } from 'vue';
 
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
+
+interface CustomConfig {
+    theme: {
+        extend: {
+            width: {
+                base: string
+            }
+        }
+    }
+}
+
+const TW_CONFIG = inject("TW_CONFIG") as CustomConfig;
+
 const store = useInputDataStore();
 const { userInputValues, isRadiansEnabled, maxLengthForInputBox } = storeToRefs(store);
 
@@ -52,7 +65,20 @@ const sanitizeInput = (event: Event) => {
 const divModifiedStyle = computed<StyleValue>(() => {
     const unitCircleRadius: number = props.unitCircleDiameter / 2;
     const translateX: number = unitCircleRadius * coordinatesForInput.x;
-    const translateY: number = unitCircleRadius * coordinatesForInput.y;
+    let translateY: number = unitCircleRadius * coordinatesForInput.y;
+
+    const baseWidth = parseFloat(TW_CONFIG.theme.extend.width.base);
+    const xEqualsRootTwoOverTwo = Math.abs(coordinatesForInput.x) === Math.SQRT2 / 2;
+    
+    /*
+        * Purpose: if the current diameter/width of the unit circle is the base
+        * width used for my tailwind styles, and if this current input box is
+        * one of the 45 degree angle ones on the unit circle, then we want to
+        * change the translated y-value so that it looks neater for the user
+    */
+    if (baseWidth === props.unitCircleDiameter && xEqualsRootTwoOverTwo ) {
+        translateY *= .95;
+    }
 
     return {
         transform: `translate(${translateX}vw, ${translateY}vw)`
@@ -95,7 +121,7 @@ const addPiSymbolToInput = () => {
 <template>
     <div class="flex absolute z-10" :style="divModifiedStyle">
         <input
-            class="rounded text-center p-0 outline-none border border-solid border-black"
+            class="rounded text-center p-0 outline-none border border-solid border-black text-md"
             v-model="userInputValues[inputId]"
             :style="inputBoxStyle"
             :maxlength="maxLengthForInputBox"
@@ -103,6 +129,7 @@ const addPiSymbolToInput = () => {
             @input="sanitizeInput"
             @focus="store.focusInput(inputId)"
             />
+
         <MathCharacterButton
             v-if="isRadiansEnabled"
             :is-focused="isFocused && !isCorrect"

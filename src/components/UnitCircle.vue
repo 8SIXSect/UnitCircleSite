@@ -64,7 +64,11 @@ onMounted(() => {
 <template>
     <UnitCircleMode />
     <div class="flex justify-center items-center my-8">
-        <svg viewBox="-1 -1 2 2" class="border border-solid border-black rounded-full w-uc" ref="unitCircleRef">
+        <svg 
+            viewBox="-1 -1 2 2"
+            class="border border-solid border-black rounded-full w-base"
+            ref="unitCircleRef">
+
             <DrawSingleLineForSlopeOfAngle :coordinates="xAxis" />
             <DrawSingleLineForSlopeOfAngle :coordinates="yAxis" />
 

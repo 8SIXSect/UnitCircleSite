@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+
+const tailwindConfig = {
     purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
             width: {
-                "uc": "40vw"
+                "base": "85vw"
             }
         },
     },
@@ -14,5 +15,8 @@ export default {
     },
     plugins: [],
 
-}
+};
+
+
+export default tailwindConfig;
 
