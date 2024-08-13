@@ -1,4 +1,6 @@
 <script setup lang="ts">
+
+import UnitCircleModeButton from './UnitCircleModeButton.vue';
 import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
 
@@ -12,10 +14,8 @@ const { isDegreesEnabled, isRadiansEnabled } = storeToRefs(store);
 <template>
     <!-- ID given for testing purposes -->
     <div id="unit-circle-mode-container">
-        <button v-if="isDegreesEnabled" disabled>Degrees</button>
-        <button v-else @click="store.switchAngleMode">Deg</button>
-
-        <button v-if="isRadiansEnabled" disabled>Radians</button>
-        <button v-else @click="store.switchAngleMode">Rad</button>
+        <UnitCircleModeButton :is-button-enabled="isDegreesEnabled" text-to-display="Degrees" />
+        <UnitCircleModeButton :is-button-enabled="isRadiansEnabled" text-to-display="Radians" />
     </div>
 </template>
+
