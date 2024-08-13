@@ -69,12 +69,11 @@ const whenCheckNumbersIsClicked = () => {
 
 </script>
 
-
 <template>
-    <div class="flex justify-center items-center">
+    <div class="flex justify-center items-center h-48">
         <button
             id="check-numbers-button"
-            class="border border-solid border-black"
+            class="border border-solid border-black rounded-md p-4 text-3xl font-light hover:bg-gray-300"
             @click="whenCheckNumbersIsClicked"
             >Check Numbers</button>
     </div>

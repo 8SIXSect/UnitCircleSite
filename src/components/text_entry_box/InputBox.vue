@@ -64,7 +64,7 @@ const sanitizeInput = (event: Event) => {
 */
 const divModifiedStyle = computed<StyleValue>(() => {
     const unitCircleRadius: number = props.unitCircleDiameter / 2;
-    const translateX: number = unitCircleRadius * coordinatesForInput.x;
+    let translateX: number = unitCircleRadius * coordinatesForInput.x;
     let translateY: number = unitCircleRadius * coordinatesForInput.y;
 
     const baseWidth = parseFloat(TW_CONFIG.theme.extend.width.base);
@@ -77,7 +77,8 @@ const divModifiedStyle = computed<StyleValue>(() => {
         * change the translated y-value so that it looks neater for the user
     */
     if (baseWidth === props.unitCircleDiameter && xEqualsRootTwoOverTwo ) {
-        translateY *= .95;
+        translateX *= .975
+        translateY *= .975;
     }
 
     return {
@@ -120,6 +121,25 @@ const inputBoxStyle = computed<StyleValue>(() => {
 
 
 /**
+    * These are the tailwind classes that will be used for the input box
+*/
+const inputBoxClasses = computed(() => {
+    const addClass = (className: string) => ({ [className]: true })
+
+    return {
+        ...(isRadiansEnabled.value && props.isFocused ? addClass("rounded-l") : addClass("rounded")),
+        ...addClass("text-center"),
+        ...addClass("p-0"),
+        ...addClass("outline-none"),
+        ...addClass("border"),
+        ...addClass("border-solid"),
+        ...addClass("border-black"),
+        ...addClass("text-md"),
+    }
+})
+
+
+/**
     * Purpose is to write a pi symbol in the inputBox when this button is clicked
 */
 const addPiSymbolToInput = () => {
@@ -133,7 +153,7 @@ const addPiSymbolToInput = () => {
 <template>
     <div class="flex absolute z-10" :style="divModifiedStyle">
         <input
-            class="rounded-l text-center p-0 outline-none border border-solid border-black text-md"
+            :class="inputBoxClasses"
             v-model="userInputValues[inputId]"
             :style="inputBoxStyle"
             :maxlength="maxLengthForInputBox"
