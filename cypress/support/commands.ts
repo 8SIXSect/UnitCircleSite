@@ -51,3 +51,10 @@ export function getCheckNumbersButton() {
         .should("exist")
 }
 
+
+export function getUnitCircleModeButtons() {
+    return cy.get("#unit-circle-mode-container")
+        .should("exist")
+        .find("button")
+}
+

@@ -1,4 +1,4 @@
-import { getInputBoxWithAngleNinetyDegrees, getCheckNumbersButton } from "../support/commands"
+import { getInputBoxWithAngleNinetyDegrees, getCheckNumbersButton, getUnitCircleModeButtons } from "../support/commands"
 
 
 describe("Inputting values into one input box on the unit circle (radians mode)", () => {
@@ -6,9 +6,7 @@ describe("Inputting values into one input box on the unit circle (radians mode)"
         cy.visit("/")
 
         // Check that the site is in degree mode
-        cy.get("#unit-circle-mode-container")
-            .should("exist")
-            .find("button")
+        getUnitCircleModeButtons()
             .last()  // Only two buttons; the second of the two buttons is radians
             .as("btn")
             .click()  // default mode is degrees so clicking the rad. button will enable radians mode

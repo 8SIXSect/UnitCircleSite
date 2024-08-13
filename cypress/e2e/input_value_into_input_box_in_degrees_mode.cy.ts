@@ -1,14 +1,11 @@
-import { getInputBoxWithAngleNinetyDegrees, getCheckNumbersButton } from "../support/commands"
+import { getInputBoxWithAngleNinetyDegrees, getCheckNumbersButton, getUnitCircleModeButtons } from "../support/commands"
 
 
 describe("Inputting values into one input box on the unit circle (degrees mode)", () => {
     beforeEach(() => {
         cy.visit("/")
 
-        // Check that the site is in degree mode
-        cy.get("#unit-circle-mode-container")
-            .should("exist")
-            .find("button")
+        getUnitCircleModeButtons()
             .first()  // The first of the two buttons is degrees
             .should("be.disabled")  // whichever is disabled is the mode we are in
     })
