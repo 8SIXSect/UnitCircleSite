@@ -13,6 +13,7 @@ import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
 import { inject } from 'vue';
 import UnitCircleMode from './unit_circle/UnitCircleMode.vue';
+import type { StyleValue } from 'vue';
 
 
 const store = useInputDataStore();
@@ -28,10 +29,12 @@ const unitCircleDiameter = 40;
 
 
 /**
-    * The CSS style will bind its height & width to this number
+    * CSS styles used to bind the width & height of the unit circle to constants
 */
-const unitCircleDiameterWithUnit = asViewWidth(unitCircleDiameter);
-
+const unitCircleStyles: StyleValue = {
+    width: asViewWidth(unitCircleDiameter),
+    height: asViewWidth(unitCircleDiameter)
+}
 
 
 /**
@@ -60,7 +63,7 @@ const isInputCorrect = (inputId: number): boolean => {
 <template>
     <UnitCircleMode />
     <div class="flex justify-center items-center my-8">
-        <svg viewBox="-1 -1 2 2">
+        <svg viewBox="-1 -1 2 2" class="border border-solid border-black rounded-full" :style="unitCircleStyles">
             <DrawSingleLineForSlopeOfAngle :coordinates="xAxis" />
             <DrawSingleLineForSlopeOfAngle :coordinates="yAxis" />
 
@@ -83,17 +86,4 @@ const isInputCorrect = (inputId: number): boolean => {
 
     </div>
 </template>
-
-<style scoped>
-
-
-svg {
-    height: v-bind("unitCircleDiameterWithUnit");
-    width: v-bind("unitCircleDiameterWithUnit");
-
-    border-radius: 50%;
-    border: 1px solid black;
-}
-
-</style>
 

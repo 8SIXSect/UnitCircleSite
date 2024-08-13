@@ -13,7 +13,7 @@ const { isDegreesEnabled, isRadiansEnabled } = storeToRefs(store);
 
 <template>
     <!-- ID given for testing purposes -->
-    <div id="unit-circle-mode-container">
+    <div id="unit-circle-mode-container" class="flex">
         <UnitCircleModeButton :is-button-enabled="isDegreesEnabled" text-to-display="Degrees" />
         <UnitCircleModeButton :is-button-enabled="isRadiansEnabled" text-to-display="Radians" />
     </div>

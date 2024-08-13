@@ -12,6 +12,6 @@ const props = defineProps<{
 </script>
 
 <template>
-    <button v-if="isButtonEnabled" class="border-b" disabled>{{ textToDisplay }}</button>
+    <button v-if="isButtonEnabled" class="border-b border-cyan-400" disabled>{{ textToDisplay }}</button>
     <button v-else @click="store.switchAngleMode">{{ textToDisplay }}</button>
 </template>
