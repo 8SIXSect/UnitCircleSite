@@ -94,7 +94,7 @@ const addPiSymbolToInput = () => {
 </script>
 
 <template>
-    <div id="inputBoxParentDiv" :style="divModifiedStyle">
+    <div class="flex absolute z-10" :style="divModifiedStyle">
         <input
             class="rounded"
             v-model="userInputValues[inputId]"
@@ -114,12 +114,6 @@ const addPiSymbolToInput = () => {
 </template>
 
 <style scoped>
-
-#inputBoxParentDiv {
-    position: absolute;
-    z-index: 10;
-    display: flex;
-}
 
 input {
     z-index: inherit;

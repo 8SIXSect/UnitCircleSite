@@ -36,4 +36,18 @@
 //   }
 // }
 
-export {}
+// TODO: move these out of here. they're not commands
+
+export function getInputBoxWithAngleNinetyDegrees() {
+    return cy.get("div")
+        .filter("[style*='transform: translate(0vw, -20vw)']")
+        .should("exist")
+        .find("input")
+}
+
+
+export function getCheckNumbersButton() {
+    return cy.get("#check-numbers-button")
+        .should("exist")
+}
+

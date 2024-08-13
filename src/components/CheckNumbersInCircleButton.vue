@@ -73,8 +73,10 @@ const whenCheckNumbersIsClicked = () => {
 <template>
     <div class="flex justify-center items-center">
         <button
+            id="check-numbers-button"
             class="border border-solid border-black"
             @click="whenCheckNumbersIsClicked"
             >Check Numbers</button>
     </div>
 </template>
+

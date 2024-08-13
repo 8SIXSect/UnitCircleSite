@@ -10,7 +10,8 @@ const { isDegreesEnabled, isRadiansEnabled } = storeToRefs(store);
 </script>
 
 <template>
-    <div>
+    <!-- ID given for testing purposes -->
+    <div id="unit-circle-mode-container">
         <button v-if="isDegreesEnabled" disabled>Degrees</button>
         <button v-else @click="store.switchAngleMode">Deg</button>
 
