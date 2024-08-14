@@ -16,5 +16,5 @@
         "isolatedModules": true,
         "lib": ["es2022"]
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*", "tailwind.config.ts"]
 }
