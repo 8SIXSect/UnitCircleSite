@@ -13,6 +13,8 @@
     ],
     "compilerOptions": {
         "module": "NodeNext",
-        "isolatedModules": true
+        "isolatedModules": true,
+        "lib": ["es2022"]
     },
+    "include": ["src/**/*"]
 }
