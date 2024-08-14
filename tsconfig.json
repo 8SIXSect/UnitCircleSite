@@ -14,7 +14,7 @@
     "compilerOptions": {
         "module": "NodeNext",
         "isolatedModules": true,
-        "lib": ["ES2022"]
+        "lib": ["es2022"]
     },
     "include": ["src/**/*", "tailwind.config.ts"]
 }
