@@ -40,13 +40,11 @@ const isInputCorrect = (inputId: number): boolean => {
 };
 
 
-const maxDiameterForUnitCircle = 80;
-
 </script>
 
 <template>
     <UnitCircleMode />
-    <div class="flex justify-center items-center mb-16 mt-24">
+    <div class="flex justify-center items-center mt-24 mb-16 lg:mt-8 lg:mb-4">
         <svg 
             viewBox="-1 -1 2 2"
             class="border border-solid border-black rounded-full"
@@ -70,7 +68,6 @@ const maxDiameterForUnitCircle = 80;
             :is-focused="index === currentlyFocusedInput"
             :is-correct="isInputCorrect(index)"
             :input-id="index"
-            :max-diameter-for-circle="maxDiameterForUnitCircle"
             />
     </div>
 </template>

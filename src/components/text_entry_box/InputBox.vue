@@ -6,7 +6,7 @@ import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
 import type { StyleValue } from 'vue';
 import { computed, inject } from 'vue';
-import { base as baseWidth } from "@/styles/widths.module.scss";
+import { base as baseWidth, large as largeWidth } from "@/styles/widths.module.scss";
 
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
@@ -18,8 +18,7 @@ const props = defineProps<{
     coordinatesForInput: OrderedPair,
     isFocused: boolean,
     isCorrect: boolean,
-    inputId: number,
-    maxDiameterForCircle: number
+    inputId: number
 }>();
 
 
@@ -50,8 +49,8 @@ const sanitizeInput = (event: Event) => {
 /**
     * Translate will position the input in desired location on the Unit Circle
 */
-const getCoordinatesWithMultiplierForY = (multiplier: number): string => {
-    const unitCircleRadius: number = parseFloat(baseWidth) / 2;
+const getCoordinatesWithMultiplierForY = (diameter: string, multiplier: number): string => {
+    const unitCircleRadius: number = parseFloat(diameter) / 2;
     const translateX = unitCircleRadius * coordinatesForInput.x;
     const translateY = unitCircleRadius * coordinatesForInput.y * multiplier;
 
@@ -63,16 +62,17 @@ const getCoordinatesWithMultiplierForY = (multiplier: number): string => {
     * At base width breakpoint, the input boxes with x=1/2 are translated up a tiny bit
 */
 const baseTranslate: string = getCoordinatesWithMultiplierForY(
+    baseWidth,
     Math.abs(coordinatesForInput.x) === (1/2) ? 1.03 : 1.0
 );
 
 
-const mediumTranslate: string = getCoordinatesWithMultiplierForY(1.0);
-
+const mediumTranslate: string = getCoordinatesWithMultiplierForY(baseWidth, 1.0);
+const largeTranslate: string = getCoordinatesWithMultiplierForY(largeWidth, 1.0);
 
 /**
     * The math character button is only going to be the PI symbol which is a single
-    * character. But, a second one is added for space
+    * character. But, a second "ch" is added for space
 */
 const mathCharButtonWidth = "2ch";
 
@@ -114,9 +114,7 @@ const inputBoxClasses = computed(() => {
         ...addClass("text-center"),
         ...addClass("p-0"),
         ...addClass("outline-none"),
-        ...addClass("border"),
-        ...addClass("border-solid"),
-        ...addClass("border-black"),
+        ...addClass("border"), ...addClass("border-solid"), ...addClass("border-black"),
         ...addClass("text-md"),
     };
 });
@@ -157,12 +155,18 @@ const addPiSymbolToInput = () => {
 <style scoped>
 
 #inputBoxContainer {
-    transform: v-bind("baseTranslate")
+    transform: v-bind("baseTranslate");
 }
 
 @media (min-width: 640px) {
     #inputBoxContainer {
-        transform: v-bind("mediumTranslate")
+        transform: v-bind("mediumTranslate");
+    }
+}
+
+@media (min-width: 1024px) {
+    #inputBoxContainer {
+        transform: v-bind("largeTranslate");
     }
 }
 
