@@ -19,7 +19,7 @@ const props = defineProps<{
     isFocused: boolean,
     isCorrect: boolean,
     inputId: number,
-    unitCircleDiameter: number
+    maxDiameterForCircle: number
 }>();
 
 
@@ -50,15 +50,20 @@ const sanitizeInput = (event: Event) => {
 /**
     * Translate will position the input in desired location on the Unit Circle
 */
-const divModifiedStyle = computed<StyleValue>(() => {
-    const unitCircleRadius: number = props.unitCircleDiameter / 2;
-    let translateX: number = unitCircleRadius * coordinatesForInput.x;
-    let translateY: number = unitCircleRadius * coordinatesForInput.y;
+const unitCircleRadius: number = props.maxDiameterForCircle / 2;
+const translateCoordinates: OrderedPair = {
+    x: unitCircleRadius * coordinatesForInput.x,
+    y: unitCircleRadius * coordinatesForInput.y
+};
 
+
+const baseTranslate = `translate(${translateCoordinates.x}vw, ${translateCoordinates.y}vw)`
+/*
     return {
         transform: `translate(${translateX}vw, ${translateY}vw)`
     }
 });
+*/
 
 
 /**
@@ -125,7 +130,7 @@ const addPiSymbolToInput = () => {
 </script>
 
 <template>
-    <div class="flex absolute z-10" :style="divModifiedStyle">
+    <div class="flex absolute z-10" id="inputBoxContainer">
         <input
             :class="inputBoxClasses"
             v-model="userInputValues[inputId]"
@@ -144,4 +149,12 @@ const addPiSymbolToInput = () => {
             />
     </div>
 </template>
+
+<style scoped>
+
+#inputBoxContainer {
+    transform: v-bind("baseTranslate")
+}
+
+</style>
 

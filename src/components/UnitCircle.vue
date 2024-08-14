@@ -12,8 +12,6 @@ import {
 import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
 import UnitCircleMode from './unit_circle/UnitCircleMode.vue';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
 
 
 const store = useInputDataStore();
@@ -45,18 +43,7 @@ const isInputCorrect = (inputId: number): boolean => {
 /**
     * Represents the diameter/width of the Unit Circle in `vw` units
 */
-const unitCircleDiameter = ref<number>(0);
-const unitCircleRef = ref<null | HTMLElement>(null);
-
-onMounted(() => {
-    if (unitCircleRef.value !== null) {
-        const unitCircleComputedStyles = window.getComputedStyle(unitCircleRef.value)
-        const widthAsPixels = parseFloat(unitCircleComputedStyles.width)
-
-        // This converts the width from pixels to view width
-        unitCircleDiameter.value = (widthAsPixels / window.innerWidth) * 100
-    }
-})
+const maxDiameterForUnitCircle = 80;
 
 
 </script>
@@ -86,7 +73,7 @@ onMounted(() => {
             :is-focused="index === currentlyFocusedInput"
             :is-correct="isInputCorrect(index)"
             :input-id="index"
-            :unit-circle-diameter="unitCircleDiameter"
+            :max-diameter-for-circle="maxDiameterForUnitCircle"
             />
     </div>
 </template>
