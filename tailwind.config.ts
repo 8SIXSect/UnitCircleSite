@@ -5,9 +5,6 @@ const tailwindConfig = {
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
-            width: {
-                "base": "80vw"
-            }
         },
     },
     variants: {

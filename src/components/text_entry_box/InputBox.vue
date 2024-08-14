@@ -9,13 +9,8 @@ import { computed, inject } from 'vue';
 
 
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
+const WIDTHS = inject("WIDTHS") as Widths;
 
-
-interface CustomConfig {
-    base: string
-}
-
-const TW_CONFIG = inject("TW_CONFIG") as CustomConfig;
 
 const store = useInputDataStore();
 const { userInputValues, isRadiansEnabled, maxLengthForInputBox } = storeToRefs(store);
@@ -61,7 +56,7 @@ const divModifiedStyle = computed<StyleValue>(() => {
     let translateX: number = unitCircleRadius * coordinatesForInput.x;
     let translateY: number = unitCircleRadius * coordinatesForInput.y;
 
-    const baseWidth = parseFloat(TW_CONFIG.base);
+    const baseWidth = parseFloat(WIDTHS.base);
     const xEqualsRootTwoOverTwo = Math.abs(coordinatesForInput.x) === Math.SQRT2 / 2;
     
     /*

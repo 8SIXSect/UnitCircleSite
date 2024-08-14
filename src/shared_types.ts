@@ -1,1 +1,3 @@
-
+interface Widths {
+    base: string
+}
