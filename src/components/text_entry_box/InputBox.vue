@@ -6,7 +6,7 @@ import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
 import type { StyleValue } from 'vue';
 import { computed, inject } from 'vue';
-import { base as baseWidth, large as largeWidth } from "@/styles/widths.module.scss";
+import styles from "@/styles/widths.module.scss";
 
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
@@ -62,13 +62,13 @@ const getCoordinatesWithMultiplierForY = (diameter: string, multiplier: number):
     * At base width breakpoint, the input boxes with x=1/2 are translated up a tiny bit
 */
 const baseTranslate: string = getCoordinatesWithMultiplierForY(
-    baseWidth,
+    styles.base,
     Math.abs(coordinatesForInput.x) === (1/2) ? 1.03 : 1.0
 );
 
 
-const mediumTranslate: string = getCoordinatesWithMultiplierForY(baseWidth, 1.0);
-const largeTranslate: string = getCoordinatesWithMultiplierForY(largeWidth, 1.0);
+const mediumTranslate: string = getCoordinatesWithMultiplierForY(styles.base, 1.0);
+const largeTranslate: string = getCoordinatesWithMultiplierForY(styles.large, 1.0);
 
 /**
     * The math character button is only going to be the PI symbol which is a single
