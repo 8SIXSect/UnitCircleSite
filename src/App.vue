@@ -13,7 +13,7 @@ const { correctInputIds } = storeToRefs(store);
 </script>
 
 <template>
-    <GameCompletedOverlay v-if="correctInputIds.length === 15" />
+    <GameCompletedOverlay v-if="correctInputIds.length === 16" />
     <UnitCircle />
     <CheckNumbersInCircleButton />
 </template>
