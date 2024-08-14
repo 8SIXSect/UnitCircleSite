@@ -9,7 +9,6 @@ import { computed, inject } from 'vue';
 
 
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
-const WIDTHS = inject("WIDTHS") as Widths;
 
 
 const store = useInputDataStore();
@@ -55,20 +54,6 @@ const divModifiedStyle = computed<StyleValue>(() => {
     const unitCircleRadius: number = props.unitCircleDiameter / 2;
     let translateX: number = unitCircleRadius * coordinatesForInput.x;
     let translateY: number = unitCircleRadius * coordinatesForInput.y;
-
-    const baseWidth = parseFloat(WIDTHS.base);
-    const xEqualsRootTwoOverTwo = Math.abs(coordinatesForInput.x) === Math.SQRT2 / 2;
-    
-    /*
-        * Purpose: if the current diameter/width of the unit circle is the base
-        * width used for my tailwind styles, and if this current input box is
-        * one of the 45 degree angle ones on the unit circle, then we want to
-        * change the translated y-value so that it looks neater for the user
-    */
-    if (baseWidth === props.unitCircleDiameter && xEqualsRootTwoOverTwo ) {
-        translateX *= .975
-        translateY *= .975;
-    }
 
     return {
         transform: `translate(${translateX}vw, ${translateY}vw)`

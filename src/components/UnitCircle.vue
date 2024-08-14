@@ -14,13 +14,10 @@ import { storeToRefs } from 'pinia';
 import UnitCircleMode from './unit_circle/UnitCircleMode.vue';
 import { ref } from 'vue';
 import { onMounted } from 'vue';
-import { inject } from 'vue';
 
 
 const store = useInputDataStore();
 const { currentlyFocusedInput, correctInputIds } = storeToRefs(store);
-
-const WIDTHS = inject("WIDTHS") as Widths;
 
 
 /**
@@ -61,18 +58,6 @@ onMounted(() => {
     }
 })
 
-const unitCircleClasses = computed(() => {
-    const addClass = (className: string) => ({ [className]: true }); 
-
-    return {
-        ...addClass("border"),
-        ...addClass("border-solid"),
-        ...addClass("border-black"),
-        ...addClass("rounded-full"),
-        ...addClass(`w-[${WIDTHS.base}]`)
-    };
-});
-
 
 </script>
 
@@ -81,7 +66,7 @@ const unitCircleClasses = computed(() => {
     <div class="flex justify-center items-center mb-16 mt-24">
         <svg 
             viewBox="-1 -1 2 2"
-            :class="unitCircleClasses"
+            class="border border-solid border-black rounded-full w-[80vw]"
             ref="unitCircleRef">
 
             <DrawSingleLineForSlopeOfAngle :coordinates="xAxis" />
