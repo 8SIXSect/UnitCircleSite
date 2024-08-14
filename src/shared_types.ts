@@ -1,3 +1,4 @@
 interface Widths {
-    base: string
+    base: string,
+    large: string
 }

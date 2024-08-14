@@ -6,7 +6,7 @@ import { useInputDataStore } from '@/stores/inputData';
 import { storeToRefs } from 'pinia';
 import type { StyleValue } from 'vue';
 import { computed, inject } from 'vue';
-
+import { base as baseWidth } from "@/styles/widths.module.scss";
 
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
@@ -50,20 +50,24 @@ const sanitizeInput = (event: Event) => {
 /**
     * Translate will position the input in desired location on the Unit Circle
 */
-const unitCircleRadius: number = props.maxDiameterForCircle / 2;
-const translateCoordinates: OrderedPair = {
-    x: unitCircleRadius * coordinatesForInput.x,
-    y: unitCircleRadius * coordinatesForInput.y
-};
+const getCoordinatesWithMultiplierForY = (multiplier: number): string => {
+    const unitCircleRadius: number = parseFloat(baseWidth) / 2;
+    const translateX = unitCircleRadius * coordinatesForInput.x;
+    const translateY = unitCircleRadius * coordinatesForInput.y * multiplier;
+
+    return `translate(${translateX}vw, ${translateY}vw)`
+}
 
 
-const baseTranslate = `translate(${translateCoordinates.x}vw, ${translateCoordinates.y}vw)`
-/*
-    return {
-        transform: `translate(${translateX}vw, ${translateY}vw)`
-    }
-});
+/**
+    * At base width breakpoint, the input boxes with x=1/2 are translated up a tiny bit
 */
+const baseTranslate: string = getCoordinatesWithMultiplierForY(
+    Math.abs(coordinatesForInput.x) === (1/2) ? 1.03 : 1.0
+);
+
+
+const mediumTranslate: string = getCoordinatesWithMultiplierForY(1.0);
 
 
 /**
@@ -154,6 +158,12 @@ const addPiSymbolToInput = () => {
 
 #inputBoxContainer {
     transform: v-bind("baseTranslate")
+}
+
+@media (min-width: 640px) {
+    #inputBoxContainer {
+        transform: v-bind("mediumTranslate")
+    }
 }
 
 </style>

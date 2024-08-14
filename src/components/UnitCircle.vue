@@ -40,11 +40,7 @@ const isInputCorrect = (inputId: number): boolean => {
 };
 
 
-/**
-    * Represents the diameter/width of the Unit Circle in `vw` units
-*/
 const maxDiameterForUnitCircle = 80;
-
 
 </script>
 
@@ -53,8 +49,9 @@ const maxDiameterForUnitCircle = 80;
     <div class="flex justify-center items-center mb-16 mt-24">
         <svg 
             viewBox="-1 -1 2 2"
-            class="border border-solid border-black rounded-full w-[80vw]"
-            ref="unitCircleRef">
+            class="border border-solid border-black rounded-full"
+            ref="unitCircleRef"
+            id="unitCircle">
 
             <DrawSingleLineForSlopeOfAngle :coordinates="xAxis" />
             <DrawSingleLineForSlopeOfAngle :coordinates="yAxis" />
@@ -77,4 +74,18 @@ const maxDiameterForUnitCircle = 80;
             />
     </div>
 </template>
+
+<style lang="scss">
+
+@import "@/styles/widths.module.scss";
+
+#unitCircle {
+    width: $base;
+
+    @media (min-width: 1024px) {
+        width: $large;
+    }
+}
+
+</style>
 
