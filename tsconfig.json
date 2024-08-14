@@ -12,10 +12,9 @@
         }
     ],
     "compilerOptions": {
-        "declaration": true,
         "module": "NodeNext",
         "isolatedModules": true,
         "lib": ["es2022", "dom"]
     },
-    "include": ["tailwind.config.ts"]
+    "include": [""]
 }

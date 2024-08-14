@@ -12,13 +12,7 @@ const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 
 interface CustomConfig {
-    theme: {
-        extend: {
-            width: {
-                base: string
-            }
-        }
-    }
+    base: string
 }
 
 const TW_CONFIG = inject("TW_CONFIG") as CustomConfig;
@@ -67,7 +61,7 @@ const divModifiedStyle = computed<StyleValue>(() => {
     let translateX: number = unitCircleRadius * coordinatesForInput.x;
     let translateY: number = unitCircleRadius * coordinatesForInput.y;
 
-    const baseWidth = parseFloat(TW_CONFIG.theme.extend.width.base);
+    const baseWidth = parseFloat(TW_CONFIG.base);
     const xEqualsRootTwoOverTwo = Math.abs(coordinatesForInput.x) === Math.SQRT2 / 2;
     
     /*
