@@ -15,15 +15,16 @@ const resetGame = () => {
 </script>
 
 <template>
-    <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center">
-        <h1 class="bg-white text-center">Game Completed!</h1>
-        <button @click="resetGame">Retry?</button>
+    <div class="absolute top-0 left-0 w-full h-screen flex flex-col justify-center items-center z-20">
+        <h1 class="text-center text-5xl z-[inherit]">Game Completed!</h1>
+        <button @click="resetGame" class="text-3xl border border-solid border-black p-2 rounded">Retry?</button>
     </div>
 </template>
 
 
 <style scoped>
-div {
-    background: rgba(0, 0, 0, 0.5);
+div.absolute {
+    background: rgba(0, 0, 0, 0.65);
 }
+
 </style>

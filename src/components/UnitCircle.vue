@@ -63,7 +63,7 @@ onMounted(() => {
 
 <template>
     <UnitCircleMode />
-    <div class="flex justify-center items-center my-8">
+    <div class="flex justify-center items-center mb-16 mt-24">
         <svg 
             viewBox="-1 -1 2 2"
             class="border border-solid border-black rounded-full w-base"

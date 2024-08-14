@@ -124,7 +124,7 @@ const inputBoxStyle = computed<StyleValue>(() => {
     * These are the tailwind classes that will be used for the input box
 */
 const inputBoxClasses = computed(() => {
-    const addClass = (className: string) => ({ [className]: true })
+    const addClass = (className: string) => ({ [className]: true });
 
     return {
         ...(isRadiansEnabled.value && props.isFocused ? addClass("rounded-l") : addClass("rounded")),
@@ -135,8 +135,8 @@ const inputBoxClasses = computed(() => {
         ...addClass("border-solid"),
         ...addClass("border-black"),
         ...addClass("text-md"),
-    }
-})
+    };
+});
 
 
 /**
