@@ -28,3 +28,11 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Build artifacts
+*.d.ts
+*.js
+!vite.config.ts
+!cypress.config.ts
+!tailwind.config.ts
+!postcss.config.js
