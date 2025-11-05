@@ -43,4 +43,5 @@ jobs:
         with:
           start: npm run dev
           wait-on: http://localhost:5174
+          config-file: cypress.config.ts
           browser: chrome
