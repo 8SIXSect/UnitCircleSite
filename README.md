@@ -59,12 +59,6 @@ npm run dev
 npm run build
 ```
 
-## Useful scripts
-
-- `npm run dev` — start Vite dev server
-- `npm run build` — build for production (runs type-checks)
-- `npm run test:e2e` — run end-to-end tests (Cypress) against preview
-
 ## License
 
 MIT License. See [LICENSE](./LICENSE) for details.
