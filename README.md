@@ -59,6 +59,12 @@ npm run dev
 npm run build
 ```
 
+### Run e2e tests
+
+```bash
+npm run test:e2e
+```
+
 ## License
 
 MIT License. See [LICENSE](./LICENSE) for details.
