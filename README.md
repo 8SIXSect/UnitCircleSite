@@ -62,7 +62,7 @@ npm run build
 ### Run e2e tests
 
 ```bash
-npm run test:e2e
+npx cypress open
 ```
 
 ## License
