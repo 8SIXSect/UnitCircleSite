@@ -115,7 +115,7 @@ const inputBoxClasses = computed(() => {
         ...addClass("outline-none"),
         ...addClass("border"), ...addClass("border-solid"), ...addClass("border-black"),
         ...addClass("text-md"),
-        ...addClass("unit-circle-input-box"),
+        ...addClass("unit-circle-input-box"),  // used for e2e testing
     };
 });
 
