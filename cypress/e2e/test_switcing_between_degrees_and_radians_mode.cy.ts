@@ -1,4 +1,4 @@
-import { getUnitCircleModeButtons } from "../support/commands"
+import {getUnitCircleModeButtons} from "../support/commands"
 
 describe("Tries to switch between the radians mode and the degrees mode", () => {
     beforeEach(() => {
@@ -10,7 +10,7 @@ describe("Tries to switch between the radians mode and the degrees mode", () => 
             .as("buttons")
             .first()
             .should("be.disabled")
-        
+
         cy.get("@buttons")
             .last()  // only two buttons so this will get the second one (which is radians)
             .click()

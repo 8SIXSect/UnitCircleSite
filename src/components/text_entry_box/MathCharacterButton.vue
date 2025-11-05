@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
-import { inject } from 'vue';
+import {inject} from 'vue';
 
 
 /**
-    * This is the PI character
-*/
+ * This is the PI character
+ */
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 
@@ -22,7 +22,8 @@ const props = defineProps<{
         id="mathCharacterButton"
         class="border-y border-r border-solid border-black text-center rounded-r bg-white hover:bg-gray-300"
         @click="$emit('addPiCharacter')"
-        >{{ PI_SYMBOL }}</button>
+    >{{ PI_SYMBOL }}
+    </button>
 </template>
 
 <style scoped>

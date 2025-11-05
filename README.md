@@ -65,6 +65,10 @@ npm run build
 npx cypress open
 ```
 
+> Note: the bundled Electron browser has been observed to run reliably for local
+> Cypress sessions; Firefox may require additional system-level configuration on
+> some Linux environments.
+
 ## License
 
 MIT License. See [LICENSE](./LICENSE) for details.

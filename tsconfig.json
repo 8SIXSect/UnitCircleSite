@@ -1,21 +1,29 @@
 {
-    "files": [],
-    "references": [
-        {
-            "path": "./tsconfig.node.json"
-        },
-        {
-            "path": "./tsconfig.app.json"
-        },
-        {
-            "path": "./tsconfig.vitest.json"
-        }
-    ],
-    "compilerOptions": {
-        "module": "NodeNext",
-        "isolatedModules": true,
-        "lib": ["es2022", "dom"],
-        "typeRoots": ["./src/types", "./node_modules/@types"]
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
     },
-    "include": [""]
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.vitest.json"
+    }
+  ],
+  "compilerOptions": {
+    "module": "NodeNext",
+    "isolatedModules": true,
+    "lib": [
+      "es2022",
+      "dom"
+    ],
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types"
+    ]
+  },
+  "include": [
+    ""
+  ]
 }

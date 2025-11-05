@@ -1,4 +1,4 @@
-import { getInputBoxWithAngleNinetyDegrees, getCheckNumbersButton, getUnitCircleModeButtons } from "../support/commands"
+import {getCheckNumbersButton, getInputBoxWithAngleNinetyDegrees, getUnitCircleModeButtons} from "../support/commands"
 
 
 describe("Inputting values into one input box on the unit circle (degrees mode)", () => {

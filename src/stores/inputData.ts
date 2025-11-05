@@ -1,5 +1,5 @@
-import type { AngleMode } from "@/components/unit_circle/unit_circle_calculations";
-import { defineStore } from "pinia";
+import type {AngleMode} from "@/components/unit_circle/unit_circle_calculations";
+import {defineStore} from "pinia";
 
 
 type FixedSizeArray<N extends number, T> = {
@@ -24,7 +24,7 @@ export const useInputDataStore = defineStore("inputData", {
 
             // 16 input boxes so each value is an input box
             userInputValues: <FixedSizeArray<16, string>>Array
-                .from({ length: 16 })
+                .from({length: 16})
                 .map(() => ""),
 
             correctInputIds: [],
@@ -34,20 +34,20 @@ export const useInputDataStore = defineStore("inputData", {
     },
     actions: {
         /**
-            * Purpose of this action is to change the currently focused input id
-            * to the given `inputId`
-        */
+         * Purpose of this action is to change the currently focused input id
+         * to the given `inputId`
+         */
         focusInput(inputId: number) {
             this.currentlyFocusedInput = inputId
         },
 
         /**
-            * The purpose of this action is to change the current angle mode to
-            * its opposite.
-            * So if the current mode is radians, then degrees will be set
-            * Additionally, the state of this store will be reset before changing
-            * the current angle mode
-        */
+         * The purpose of this action is to change the current angle mode to
+         * its opposite.
+         * So if the current mode is radians, then degrees will be set
+         * Additionally, the state of this store will be reset before changing
+         * the current angle mode
+         */
         switchAngleMode() {
             const angleModeToSwitchTo: AngleMode = (
                 this.currentAngleMode === "degrees" ? "radians" : "degrees"
@@ -65,9 +65,9 @@ export const useInputDataStore = defineStore("inputData", {
         isRadiansEnabled: (state: State) => state.currentAngleMode === 'radians',
 
         /**
-        * In rad. mode, the largest input is: 11pi/6 (5 characters w/ pi symbol)
-        * In deg. mode, you'll never have an input larger than 3 characters
-        */
+         * In rad. mode, the largest input is: 11pi/6 (5 characters w/ pi symbol)
+         * In deg. mode, you'll never have an input larger than 3 characters
+         */
         maxLengthForInputBox(): number {
             return this.isRadiansEnabled ? 5 : 3;
         }

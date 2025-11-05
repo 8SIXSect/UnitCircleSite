@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { useInputDataStore } from '@/stores/inputData';
+import {useInputDataStore} from '@/stores/inputData';
 import {
-    coordinatesForInputBoxes, getExpectedValueOfAngleAtPair, type OrderedPair
+    coordinatesForInputBoxes,
+    getExpectedValueOfAngleAtPair,
+    type OrderedPair
 } from './unit_circle/unit_circle_calculations';
-import { storeToRefs } from 'pinia';
-import { evaluate } from "mathjs"
-import { inject } from "vue";
+import {storeToRefs} from 'pinia';
+import {evaluate} from "mathjs"
+import {inject} from "vue";
 
 
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
@@ -20,13 +22,13 @@ const {
 
 /**
  * Handles the logic for when the check numbers button is clicked
-*/
+ */
 const whenCheckNumbersIsClicked = () => {
     Array.from(userInputValues.value)
         .map((inputValue: string, index: number) => [inputValue, index])
         .filter((valueIndexPair: (string | number)[]) => valueIndexPair[0] !== "")
         .forEach((valueIndexPair: (string | number)[]) => {
-            
+
             const inputBoxValue = valueIndexPair[0] as string;
             const inputId = valueIndexPair[1] as number;
 
@@ -74,7 +76,8 @@ const whenCheckNumbersIsClicked = () => {
             id="check-numbers-button"
             class="border border-solid border-black rounded-md p-4 text-3xl font-light hover:bg-gray-300 lg:w-1/2"
             @click="whenCheckNumbersIsClicked"
-            >Check Numbers</button>
+        >Check Numbers
+        </button>
     </div>
 </template>
 

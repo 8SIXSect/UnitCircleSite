@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { CoordinatesOfLine } from '@/components/unit_circle/unit_circle_calculations';
+import type {CoordinatesOfLine} from '@/components/unit_circle/unit_circle_calculations';
 
 
 const props = defineProps<{
     coordinates: CoordinatesOfLine
 }>();
 
-const { coordinates } = props;
+const {coordinates} = props;
 
 </script>
 
