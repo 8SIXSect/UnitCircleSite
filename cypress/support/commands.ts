@@ -39,7 +39,7 @@
 // TODO: move these out of here. they're not commands
 
 export function getInputBoxWithAngleNinetyDegrees() {
-    return cy.get("div > input.rounded")
+    return cy.get(".unit-circle-input-box")
         .eq(3)
         .should("exist")
 }

@@ -115,6 +115,7 @@ const inputBoxClasses = computed(() => {
         ...addClass("outline-none"),
         ...addClass("border"), ...addClass("border-solid"), ...addClass("border-black"),
         ...addClass("text-md"),
+        ...addClass("unit-circle-input-box"),
     };
 });
 

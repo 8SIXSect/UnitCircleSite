@@ -9,7 +9,7 @@ import {inject} from 'vue';
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
 
-const props = defineProps<{
+defineProps<{
     isFocused: boolean,
     mathCharacterButtonWidth: string
 }>();
