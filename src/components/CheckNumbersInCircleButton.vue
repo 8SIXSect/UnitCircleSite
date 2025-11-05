@@ -10,7 +10,6 @@ import { inject } from "vue";
 
 const PI_SYMBOL = inject("PI_SYMBOL") as string;
 
-
 const store = useInputDataStore();
 const {
     userInputValues,

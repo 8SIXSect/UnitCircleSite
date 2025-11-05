@@ -1,55 +1,70 @@
-# unit-circle
+# Unit Circle
 
-This template should help get you started developing with Vue 3 in Vite.
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Vue 3](https://img.shields.io/badge/vue-3.x-42b883?logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-%2352B0D8.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/tailwindcss-3.x-38b2ac?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/vite-%5E5.0-brightgreen?logo=vite)](https://vitejs.dev/)
 
-## Recommended IDE Setup
+A small interactive learning application to explore the unit circle, practice angles in  
+degrees and radians, and test understanding of trigonometric coordinates and slopes.  
+Built as a compact single-page app with Vue 3 and TypeScript.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Demo (placeholder)
 
-## Type Support for `.vue` Imports in TS
+> Add your recorded demo, GIF, or short Loom/YouTube link here once available.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+![Demo placeholder](https://via.placeholder.com/800x420.png?text=Demo+or+GIF+placeholder)
 
-## Customize configuration
+## Highlights / Features
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Interactive unit circle with degree/radian modes.
+- Keyboard and on-screen input for entering angle-related values.
+- Visual helpers to illustrate slopes and coordinates.
+- Tests: e2e tests with Cypress.
 
-## Project Setup
+## Technologies
 
-```sh
+- Vue 3 (Composition API)
+- TypeScript
+- Vite (dev server + build)
+- Tailwind CSS for utility-first styling
+- Pinia for state management
+- Sass for modular styles
+- Math.js for numeric helpers
+- Cypress for end-to-end tests
+
+## Getting started
+
+### Prerequisites
+
+- Node.js (tested with Node 20)
+- npm
+
+### Install
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Run development server
 
-```sh
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Build for production
 
-```sh
+```bash
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## Useful scripts
 
-```sh
-npm run test:unit
-```
+- `npm run dev` — start Vite dev server
+- `npm run build` — build for production (runs type-checks)
+- `npm run test:e2e` — run end-to-end tests (Cypress) against preview
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+## License
 
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
+MIT LICENSE
