@@ -67,4 +67,4 @@ npm run build
 
 ## License
 
-MIT LICENSE
+MIT License. See [LICENSE](./LICENSE) for details.
