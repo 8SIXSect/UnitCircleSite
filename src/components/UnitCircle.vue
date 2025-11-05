@@ -3,7 +3,7 @@
 import {computed} from 'vue';
 import DrawSingleLineForSlopeOfAngle from './unit_circle/DrawSingleLineForSlopeOfAngle.vue';
 import DrawPairOfLinesForSlopeOfAngle from './unit_circle/DrawPairOfLinesForSlopeOfAngle.vue';
-import InputBox from './text_entry_box/InputBox.vue';
+import InputBox from './inputbox/InputBox.vue';
 import {
     buildCoordinatesOfAngle,
     coordinatesForInputBoxes,

@@ -238,4 +238,3 @@ export const getExpectedValueOfAngleAtPair = (mode: AngleMode, sourcePair: Order
         .at(0)!!.convertTo(mode)
         .value;
 }
-
