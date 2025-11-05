@@ -3,9 +3,7 @@
 import {useInputDataStore} from '@/stores/inputData';
 import {storeToRefs} from 'pinia';
 import type {StyleValue} from 'vue';
-import {computed, inject} from 'vue';
-
-const PI_SYMBOL = inject("PI_SYMBOL") as string;
+import {computed} from 'vue';
 
 const store = useInputDataStore();
 const {userInputValues, isRadiansEnabled, maxLengthForInputBox} = storeToRefs(store);
