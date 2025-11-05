@@ -59,10 +59,16 @@ npm run dev
 npm run build
 ```
 
-### Run e2e tests
+### Run e2e tests (headed)
 
 ```bash
 npx cypress open
+```
+
+### Run e2e tests (headless)
+
+```bash
+npx cypress run
 ```
 
 > Note: the bundled Electron browser has been observed to run reliably for local
