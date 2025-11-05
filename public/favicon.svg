@@ -1,0 +1,19 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="Unit Circle favicon" role="img">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- unit circle -->
+    <circle id="circle" cx="32" cy="32" r="22" stroke="#42B883" stroke-width="2"></circle>
+    <!-- angle arc 0→30° -->
+    <path id="arc" d="M54 32 A22 22 0 0 1 51.053 43" stroke="#38B2AC" stroke-width="2"></path>
+    <!-- radius at 30° -->
+    <path id="radius" d="M32 32 L51.053 43" stroke="#52B0D8" stroke-width="2"></path>
+    <!-- point on circumference -->
+    <circle id="dot" cx="51.053" cy="43" r="2.5" fill="#52B0D8" stroke="none"></circle>
+    <!-- subtle axis ticks at 0°, 90°, 180°, 270° -->
+    <g opacity="0.6" stroke="#42B883" stroke-width="1.25">
+      <path d="M9.5 32 H14"></path>   <!-- 180° -->
+      <path d="M50 32 H54.5"></path> <!--   0° -->
+      <path d="M32 9.5 V14"></path>  <!--  90° -->
+      <path d="M32 50 V54.5"></path> <!-- 270° -->
+    </g>
+  </g>
+</svg>
