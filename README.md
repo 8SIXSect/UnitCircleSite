@@ -20,18 +20,12 @@ Built as a compact single-page app with Vue 3 and TypeScript.
 
 - Interactive unit circle with degree/radian modes.
 - Keyboard and on-screen input for entering angle-related values.
-- Visual helpers to illustrate slopes and coordinates.
 - Tests: e2e tests with Cypress.
 
 ## Technologies
 
 - Vue 3 (Composition API)
-- TypeScript
-- Vite (dev server + build)
 - Tailwind CSS for utility-first styling
-- Pinia for state management
-- Sass for modular styles
-- Math.js for numeric helpers
 - Cypress for end-to-end tests
 
 ## Getting started
