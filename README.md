@@ -12,9 +12,7 @@ Built as a compact single-page app with Vue 3 and TypeScript.
 
 ## Demo (placeholder)
 
-> Add your recorded demo, GIF, or short Loom/YouTube link here once available.
-
-![Demo placeholder](https://via.placeholder.com/800x420.png?text=Demo+or+GIF+placeholder)
+![Demo of ClampCalculator](assets/ClampCalcDemo.gif)
 
 ## Highlights / Features
 
