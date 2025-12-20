@@ -14,7 +14,7 @@ Built as a compact single-page app with Vue 3 and TypeScript.
 
 ![Demo of Unit Circle Game](assets/UnitCircleSiteDemo.gif)
 
-## Highlights / Features
+## Features
 
 - Interactive unit circle with degree/radian modes.
 - Keyboard and on-screen input for entering angle-related values.
