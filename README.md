@@ -13,18 +13,6 @@ Built as a compact single-page app with Vue 3 and TypeScript.
 
 ![Demo of Unit Circle Game](assets/UnitCircleSiteDemo.gif)
 
-## Features
-
-- Interactive unit circle with degree/radian modes.
-- Keyboard and on-screen input for entering angle-related values.
-- Tests: e2e tests with Cypress.
-
-## Technologies
-
-- Vue 3 (Composition API)
-- Tailwind CSS for utility-first styling
-- Cypress for end-to-end tests
-
 ## Getting started
 
 ### Prerequisites
@@ -44,18 +32,6 @@ npm install
 npm run dev
 ```
 
-### Build for production
-
-```bash
-npm run build
-```
-
-### Run e2e tests (headed)
-
-```bash
-npx cypress open
-```
-
 ### Run e2e tests (headless)
 
 ```bash
@@ -65,6 +41,18 @@ npx cypress run
 > Note: the bundled Electron browser has been observed to run reliably for local
 > Cypress sessions; Firefox may require additional system-level configuration on
 > some Linux environments.
+
+## Features
+
+- Interactive unit circle with degree/radian modes.
+- Keyboard and on-screen input for entering angle-related values.
+- Tests: e2e tests with Cypress.
+
+## Technologies
+
+- Vue 3 (Composition API)
+- Tailwind CSS for utility-first styling
+- Cypress for end-to-end tests
 
 ## License
 
