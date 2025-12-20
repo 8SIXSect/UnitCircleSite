@@ -6,8 +6,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/tailwindcss-3.x-38b2ac?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/vite-%5E5.0-brightgreen?logo=vite)](https://vitejs.dev/)
 
-A small interactive learning application to explore the unit circle, practice angles in  
-degrees and radians, and test understanding of trigonometric coordinates and slopes.  
+A small interactive learning application to explore the unit circle, practice angles in degrees and radians.  
 Built as a compact single-page app with Vue 3 and TypeScript.
 
 ## Demo
