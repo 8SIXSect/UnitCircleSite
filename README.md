@@ -10,9 +10,9 @@ A small interactive learning application to explore the unit circle, practice an
 degrees and radians, and test understanding of trigonometric coordinates and slopes.  
 Built as a compact single-page app with Vue 3 and TypeScript.
 
-## Demo (placeholder)
+## Demo
 
-![Demo of Unit Circle Game](assets/output_resized.gif)
+![Demo of Unit Circle Game](assets/UnitCircleDemo.gif)
 
 ## Highlights / Features
 
