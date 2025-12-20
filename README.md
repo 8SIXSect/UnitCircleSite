@@ -12,7 +12,7 @@ Built as a compact single-page app with Vue 3 and TypeScript.
 
 ## Demo
 
-![Demo of Unit Circle Game](assets/UnitCircleDemo.gif)
+![Demo of Unit Circle Game](assets/UnitCircleSiteDemo_cropped.gif)
 
 ## Highlights / Features
 
