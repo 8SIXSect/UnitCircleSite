@@ -12,7 +12,7 @@ Built as a compact single-page app with Vue 3 and TypeScript.
 
 ## Demo (placeholder)
 
-![Demo of ClampCalculator](assets/ClampCalcDemo.gif)
+![Demo of Unit Circle Game](assets/UnitCircleSiteDemo.gif)
 
 ## Highlights / Features
 
